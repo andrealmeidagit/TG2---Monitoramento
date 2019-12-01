@@ -74,11 +74,44 @@ A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \te
  O pacote OctaneSDK .NET foi desenvolvido para funcionar com o Ambiente Integral de Desenvolvimento (\textit{Integrated Development Environment} - IDE) Visual Studio, da Microsoft. A IDE foi utilizada para instalar o pacote de extensão do OctaneSDK. \cite{OctaneSDK}
  
  A linguagem de programação mais recomendada para desenvolvimento usando OctaneSDK com o Visual Studio é C\#. O desenvolvimento em outras linguagens baseadas em .NET \textit{framework} é possível, mas sem suporte da Impinj.
- 
+
  
  \section{Abordagem utilizada}
  
  Três pontos foram essenciais para a execução deste trabalho: o \textit{software} de detecção de pessoas e cruzamento de fronteiras para a contagem de pessoas em um determinado ambiente; a implementação física das leitoras, antenas e demais equipamentos no local de teste; e a elaboração de casos de teste para  validação da abordagem. Estes pontos serão descritos a seguir.
+ 
+  
+ \subsection{Implementação física}
+ 
+ As leitoras e as antenas possuem um grande campo de cobertura relativo a outros modelos de leitora RFID. Entretanto, os testes de cobertura de sinal anunciados pelo fabricante são válidos para ambientes abertos, espaços e sem a presença de objetos que possam interferir com o sinal.
+ 
+ \subsection{O local}
+ 
+ O Laboratório de Automação e Robótica (LARA) foi o local onde os equipamentos foram montados e os testes executados.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{figs/Metodologia/LARA_leitoras-1.png}
+    \caption{Imagem apresentando o LARA - local de instalação das leitoras}
+    \label{fig:LARA1}
+\end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{figs/Metodologia/LARA_leitoras-2.png}
+    \caption{Imagem apresentando o LARA a partir de um segundo ponto de vista - local de instalação das leitoras}
+    \label{fig:LARA2}
+\end{figure}
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figs/Metodologia/LARA_planta.PNG}
+    \caption{Imagem apresentando a planta baixa do LARA - local de instalação das leitoras}
+    \label{fig:LARA_planta}
+\end{figure}
+
+
+
  
  \subsection{Elaboração do Software}
  
@@ -100,13 +133,8 @@ A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \te
 \end{figure}
  
  
- 
- \subsection{Implementação física}
- 
- As leitoras e as antenas possuem um grande campo de cobertura relativo a outros modelos de leitora RFID. Entretanto, os testes de cobertura de sinal anunciados pelo fabricante são válidos para ambientes abertos, espaços e sem a presença de objetos que possam interferir com o sinal.
- 
- 
 
+ 
  
  
  
