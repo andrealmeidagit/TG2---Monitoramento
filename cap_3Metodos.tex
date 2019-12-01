@@ -1,10 +1,114 @@
 
-\chapter{Implementação\label{chap:Metodos}}
+\chapter{Metodologia\label{chap:Metodos}}
 
 % Resumo opcional. Comentar se não usar.
-\resumodocapitulo{resumo}
+%\resumodocapitulo{resumo}
 
 
 \section{Materiais}
 
-texto
+A execução do trabalho envolveu a utilização dos materiais descritos a seguir.
+
+\subsection{Hardware}
+\subsubsection{Leitora RFID Impinj Speedway R420}
+
+A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \textit{tags} de RFID passivo. Ela é capaz de operar na faixa de frequência de 860-960 MHz, sendo que o modelo específico licenciado para o Brasil permite operações entre 902,5 e 907 MHz. Pode emitir sinais de até 32,25 dBm de potência na transmissão, e é capaz de receber um sinal com a sensibilidade mínima de -80 dBm e perda de retorno de 10 dB \cite{SpeedwayRDatasheet} \cite{SpeedwayRUserManual} \cite{TG2013OliveiraERocha}. A figura \ref{fig:SpeedwayR420_first} mostra uma foto da leitora.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.55\linewidth]{figs/Metodologia/leitoraSpeedwayR420.jpg}
+        \caption{Leitora Impinj Speedway R420 - Foto obtida no manual de instalação e operação da leitora \cite{SpeedwayRUserManual}}
+        \label{fig:SpeedwayR420_first}
+    \end{figure}
+
+ A leitora é capaz de ler até 1100 etiquetas/s. Ela possui portas suficientes para o acoplamento de até 4 antenas, expansível até 32 antenas utilizando \textit{Hubs} específicos para esta aplicação. Dois protocolos são utilizados para a interface por ar: \textit{GS1/EPCglobal UHF Gen2 (ISO 18000-6C)} e \textit{RAIN RFID} \cite{SpeedwayRDatasheet}\cite{SpeedwayRUserManual}. As portas de conexão das antenas podem ser vistas na figura \ref{fig:SpeedwayR420front}.
+ 
+     \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{figs/Metodologia/SpeedwayR420-front-view.png}
+        \caption{Leitora Impinj Speedway R420 - vista frontal - Foto obtida no manual de instalação e operação da leitora} \cite{SpeedwayRUserManual}
+        \label{fig:SpeedwayR420front}
+    \end{figure}
+ 
+ Existem diversas portas na parte traseira da leitora Speedway R420. Uma delas é uma porta \textit{10/100 BaseT Ethernet} para comunicação em TCP/IP. A comunicação por TCP/IP é ideal para o uso comum utilizando os softwares comercializados pela Impinj ou por programas feitos utilizando o pacote \textit{Impinj OctaneSDK}. Além dessa porta, a comunicação pode ser feita por USB ou por comunicação serial RS-232 em um conector RJ45 para acesso ao console embarcado na leitora. As portas seriais são ideais para utilização dos pacotes \textit{Impinj LTK} de programação em baixo nível, utilizando o padrão \textit{Low Level Reader Protocol} (LLRP). Baixo nível neste caso implica capacidade de alterar o protocolo de operação, o modo de marcação de tempo e dos parâmetros de comando por ar\cite{GS1-LLRP}\cite{SpeedwayRUserManual}. A visão traseira da leitora é apresentada na figura \ref{fig:SpeedwayR420back}.
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{figs/Metodologia/SpeedwayR420-back-view.png}
+    \caption{Leitora Impinj Speedway R420 - vista traseira - Foto obtida no manual de instalação e operação da leitora \cite{SpeedwayRUserManual}}
+    \label{fig:SpeedwayR420back}
+\end{figure}
+ 
+ Existe ainda uma porta \textit{GPIO DE-15} (\textit{General Purpose Input-Output DE-15} - Porta de uso de próstio geral para entrada e saída de dados)\cite{SpeedwayRUserManual}. Ela pode ser utilizada para a configuração de comandos e gatilhos de leitura.
+ 
+ A alimentação elétrica da leitora pode ser feita utilizando-se o padrão \textit{PoE} (\textit{Power over Ethernet}) \cite{SpeedwayRUserManual}, ou seja, sem a necessidade de fonte externa, apenas através do cabo Ethernet, ou então pode ser feita com uma fonte 24 volts de corrente contínua \cite{IEEE-SA-POE}. A fonte pode prover uma confiabilidade maior para operação com potências maiores, próximas ao limite de 32,25 dBm, enquanto a alimentação \textit{PoE} permite maior flexibilidade na instalação do produto, principalmente em relação à passagem de cabos e instalação de tomadas.
+ 
+ \subsubsection{Antena RFID Impinj Threshold}
+ 
+ A Threshold, também da fabricante Impinj, é uma antena RAIN RFID específica para detectar cruzamento de barreiras e fronteiras. O seu corpo alongado, com polarização linear paralela ao menor eixo, permite uma ampla cobertura, e a possibilidade de conectar múltiplas antenas para criar uma "cortina" de cobertura RFID \cite{AntenaThresholdDatasheet}.A antena pode ser vista na figura \ref{fig:AntenaThreshold_first} a seguir.
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figs/Metodologia/impinj_Threshold.png}
+    \caption{Antena Impinj Threshold - Foto obtida no \textit{datasheet} da antena \cite{AntenaThresholdDatasheet}}
+    \label{fig:AntenaThreshold_first}
+\end{figure}
+ 
+ A antena opera em duas faixas de frequência: 902-928 MHz (FCC) e 865-868 MHz (ETSI), possui um ganho de campo distante de 5.0 dBi e impedância nominal de 50 $\Omega$ \cite{AntenaThresholdDatasheet}. A antena cobre um volume elipsoidal de 3m de comprimento por 4m de largura por 3m de altura, como pode ser visto na figura \ref{fig:AntenaThresholdCobertura}.
+ 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{figs/Metodologia/impinj_antenna_coverage.png}
+    \caption{Cima: gráfico da zona de cobertura das antenas Impinj Threshold. Baixo: Desenho mecânico da leitora em pontos de vista iguais aos dos desenhos de cobertura acima - Adaptado do \textit{datasheet} da antena \cite{AntenaThresholdDatasheet}}
+    \label{fig:AntenaThresholdCobertura}
+\end{figure}
+ 
+ \subsection{Software}
+ 
+ \subsubsection{OctaneSDK}
+ 
+ O pacote de desenvolvimento OctaneSDK para dispositivos RAIN RFID, da Impinj, foi utilizado para desenvolver a parte de software deste trabalho. O pacote possui versões para .NET e java \cite{OctaneSDK}. O pacote para .NET foi lançado ha mais tempo e possui mais versões, e, por conseguinte, mais defeitos foram corrigidos, o que torna esta implementação mais robusta do que o pacote em java. Por esse motivo foi escolhido para o desenvolvimento desse trabalho.
+ 
+ \subsubsection{Visual Studio}
+ 
+ O pacote OctaneSDK .NET foi desenvolvido para funcionar com o Ambiente Integral de Desenvolvimento (\textit{Integrated Development Environment} - IDE) Visual Studio, da Microsoft. A IDE foi utilizada para instalar o pacote de extensão do OctaneSDK. \cite{OctaneSDK}
+ 
+ A linguagem de programação mais recomendada para desenvolvimento usando OctaneSDK com o Visual Studio é C\#. O desenvolvimento em outras linguagens baseadas em .NET \textit{framework} é possível, mas sem suporte da Impinj.
+ 
+ 
+ \section{Abordagem utilizada}
+ 
+ Três pontos foram essenciais para a execução deste trabalho: o \textit{software} de detecção de pessoas e cruzamento de fronteiras para a contagem de pessoas em um determinado ambiente; a implementação física das leitoras, antenas e demais equipamentos no local de teste; e a elaboração de casos de teste para  validação da abordagem. Estes pontos serão descritos a seguir.
+ 
+ \subsection{Elaboração do Software}
+ 
+
+ 
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figs/Metodologia/Petri_net.png}
+    \caption{Rede de Petri representando todas as possibilidades circulação de pessoas pelo LARA como estados e transições}
+    \label{fig:Petri1}
+\end{figure}
+
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figs/Metodologia/Petri_net2.png}
+    \caption{Rede de Petri representando a circulação de pessoas pelo LARA em um caso hipotético}
+    \label{fig:Petri2}
+\end{figure}
+ 
+ 
+ 
+ \subsection{Implementação física}
+ 
+ As leitoras e as antenas possuem um grande campo de cobertura relativo a outros modelos de leitora RFID. Entretanto, os testes de cobertura de sinal anunciados pelo fabricante são válidos para ambientes abertos, espaços e sem a presença de objetos que possam interferir com o sinal.
+ 
+ 
+
+ 
+ 
+ 
+ \subsection{Casos de teste}
+ 
