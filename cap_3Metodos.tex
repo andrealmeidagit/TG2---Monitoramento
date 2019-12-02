@@ -62,6 +62,22 @@ A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \te
     \caption{Cima: gráfico da zona de cobertura das antenas Impinj Threshold. Baixo: Desenho mecânico da leitora em pontos de vista iguais aos dos desenhos de cobertura acima - Adaptado do \textit{datasheet} da antena \cite{AntenaThresholdDatasheet}}
     \label{fig:AntenaThresholdCobertura}
 \end{figure}
+
+\subsubsection{Transponder (TAG)}
+
+\textcolor{red}{A TAG 915 MHZ ....}
+ 
+ \subsubsection{Quantitativo}
+ 
+ Este trabalho conta com leitoras e antenas RFID, além do espaço para trabalho e testes, gentilmente cedidos pelo Laboratório de Automação e Robótica (LARA) da UnB. No que se refere aos equipamentos, foram utilizados com os seguintes dispositivos:
+ 
+ \begin{itemize}
+     \item 3 (três) Leitoras IMPINJ Speedway R420
+     \item 6 (seis) Antenas IMPINJ Treshold
+     \item 1 (um) hub DLINK 6 portas Ethernet
+     \item 20 (vinte) TAGs RFID 915 MHZ
+     \item cabeamento e fontes de alimentação necessários
+ \end{itemize}
  
  \subsection{Software}
  
@@ -89,11 +105,23 @@ A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \te
  
  Levando em consideração este problema, um cenário fictício de um ambiente de trabalho é considerado, baseado em escritórios e laboratórios reais. Supõe-se que todos os trabalhadores e visitantes, carreguem consigo crachás de identificação, nos quais estão embutidos transpônderes RFID já existentes, utilizados no sistema de controle de acesso do escritório ou laboratório.
  
- As pessoas que transitam neste ambiente utilizam seus crachás em cordões dependurados no pescoço. Cada crachá permanece próximo ao corpo do seu usuário, porém não preso a ele. Os crachás ficam na altura do tórax. 
+ As pessoas que transitam neste ambiente utilizam seus crachás em cordões dependurados no pescoço. Cada crachá permanece próximo ao corpo do seu usuário, porém não preso a ele. Os crachás ficam na altura do tórax.
  
  \subsection{O local}
  
+
  O Laboratório de Automação e Robótica (LARA) foi o local para simulação do ambiente de teste do sistema criado. Especificamente, a metade sul do laboratório, onde se encontram os ambientes de estudo geral e a sala de reuniões.
+ 
+ Esta parte do laboratório foi subdividida em três ambientes: a Sala de Reuniões (1), Ala Principal (2) e o Corredor de Mesas (3), como pode ser observado na planta baixa da figura \ref{fig:LARA_planta}.
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{figs/Metodologia/LARA_planta_ambientes.png}
+    \caption{Imagem apresentando a planta baixa do LARA - local de instalação das leitoras}
+    \label{fig:LARA_planta}
+\end{figure}
+
+O ambiente do laboratório pode ser melhor visualizado nas figuras \ref{fig:LARA1} e \ref{fig:LARA2} abaixo. As figuras mostram as projeções tridimensionais do laboratório, a partir de dois pontos de vista diferentes, para melhor compreensão do ambiente de estudo.
 
   \begin{figure}[H]
     \centering
@@ -109,12 +137,7 @@ A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \te
     \label{fig:LARA2}
 \end{figure}
 
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\linewidth]{figs/Metodologia/LARA_planta.PNG}
-    \caption{Imagem apresentando a planta baixa do LARA - local de instalação das leitoras}
-    \label{fig:LARA_planta}
-\end{figure}
+
 
 
 
