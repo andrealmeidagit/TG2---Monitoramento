@@ -26,7 +26,7 @@ A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \te
      \begin{figure}[H]
         \centering
         \includegraphics[width=0.6\linewidth]{figs/Metodologia/SpeedwayR420-front-view.png}
-        \caption{Leitora Impinj Speedway R420 - vista frontal - Foto obtida no manual de instalação e operação da leitora} \cite{SpeedwayRUserManual}
+        \caption{Leitora Impinj Speedway R420 - vista frontal - Foto obtida no manual de instalação e operação da leitora \cite{SpeedwayRUserManual}.}
         \label{fig:SpeedwayR420front}
     \end{figure}
  
@@ -35,7 +35,7 @@ A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \te
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{figs/Metodologia/SpeedwayR420-back-view.png}
-    \caption{Leitora Impinj Speedway R420 - vista traseira - Foto obtida no manual de instalação e operação da leitora \cite{SpeedwayRUserManual}}
+    \caption{Leitora Impinj Speedway R420 - vista traseira - Foto obtida no manual de instalação e operação da leitora \cite{SpeedwayRUserManual}.}
     \label{fig:SpeedwayR420back}
 \end{figure}
  
@@ -78,16 +78,22 @@ A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \te
  
  \section{Abordagem utilizada}
  
- Três pontos foram essenciais para a execução deste trabalho: o \textit{software} de detecção de pessoas e cruzamento de fronteiras para a contagem de pessoas em um determinado ambiente; a implementação física das leitoras, antenas e demais equipamentos no local de teste; e a elaboração de casos de teste para  validação da abordagem. Estes pontos serão descritos a seguir.
+ Três pontos foram essenciais para a execução deste trabalho: a implementação física das leitoras, antenas e demais equipamentos no local de teste; o \textit{software} de detecção de pessoas e cruzamento de fronteiras para a contagem de pessoas em um determinado ambiente;  e a elaboração de casos de teste para  validação da abordagem. Estes pontos serão descritos a seguir.
  
   
  \subsection{Implementação física}
  
- As leitoras e as antenas possuem um grande campo de cobertura relativo a outros modelos de leitora RFID. Entretanto, os testes de cobertura de sinal anunciados pelo fabricante são válidos para ambientes abertos, espaços e sem a presença de objetos que possam interferir com o sinal.
+ As leitoras e as antenas utilizadas neste trabalho possuem um grande campo de cobertura relativo a outros modelos de equipamentos RFID passivo. Entretanto, a cobertura de sinal anunciada pelo fabricante é válida para ambientes abertos, espaços e sem a presença de objetos que possam interferir com o sinal, como mesas, cadeiras, equipamentos e pessoas.
+ 
+ A interferência de sinais de radiofrequência por metais e líquidos  é um problema conhecido na indústria. Ao contrário do que se acreditava, ambos os materiais interferem nas leituras dos sinais devido aos efeitos de reflexão, majoritariamente. Anteriormente acreditava-se que os meios aquosos absorviam os sinais, e os metais os refletiam. Essa ideia é refutada por Fletcher \cite{fletcher2005study}, em seu estudo da interferência de diferentes materiais na tecnologia RFID.
+ 
+ Levando em consideração este problema, um cenário fictício de um ambiente de trabalho é considerado, baseado em escritórios e laboratórios reais. Supõe-se que todos os trabalhadores e visitantes, carreguem consigo crachás de identificação, nos quais estão embutidos transpônderes RFID já existentes, utilizados no sistema de controle de acesso do escritório ou laboratório.
+ 
+ As pessoas que transitam neste ambiente utilizam seus crachás em cordões dependurados no pescoço. Cada crachá permanece próximo ao corpo do seu usuário, porém não preso a ele. Os crachás ficam na altura do tórax. 
  
  \subsection{O local}
  
- O Laboratório de Automação e Robótica (LARA) foi o local onde os equipamentos foram montados e os testes executados.
+ O Laboratório de Automação e Robótica (LARA) foi o local para simulação do ambiente de teste do sistema criado. Especificamente, a metade sul do laboratório, onde se encontram os ambientes de estudo geral e a sala de reuniões.
 
   \begin{figure}[H]
     \centering
