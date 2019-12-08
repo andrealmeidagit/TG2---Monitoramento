@@ -101,9 +101,7 @@ A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \te
  
  As leitoras e as antenas utilizadas neste trabalho possuem um grande campo de cobertura relativo a outros modelos de equipamentos RFID passivo. Entretanto, a cobertura de sinal anunciada pelo fabricante é válida para ambientes abertos, espaços e sem a presença de objetos que possam interferir com o sinal, como mesas, cadeiras, equipamentos e pessoas.
  
- A interferência de sinais de radiofrequência por metais e líquidos  é um problema conhecido na indústria. Ao contrário do que se acreditava, ambos os materiais interferem nas leituras dos sinais devido aos efeitos de reflexão, majoritariamente. Anteriormente acreditava-se que os meios aquosos absorviam os sinais, e os metais os refletiam. Essa ideia é refutada por Fletcher \cite{fletcher2005study}, em seu estudo da interferência de diferentes materiais na tecnologia RFID.
- 
- Levando em consideração este problema, um cenário fictício de um ambiente de trabalho é considerado, baseado em escritórios e laboratórios reais. Supõe-se que todos os trabalhadores e visitantes, carreguem consigo crachás de identificação, nos quais estão embutidos transpônderes RFID já existentes, utilizados no sistema de controle de acesso do escritório ou laboratório.
+ A interferência de sinais de radiofrequência por metais e líquidos  é um problema conhecido na indústria. Levando em consideração este problema, um cenário fictício de um ambiente de trabalho é considerado, baseado em escritórios e laboratórios reais. Supõe-se que todos os trabalhadores e visitantes, carreguem consigo crachás de identificação, nos quais estão embutidos transpônderes RFID já existentes, utilizados no sistema de controle de acesso do escritório ou laboratório.
  
  As pessoas que transitam neste ambiente utilizam seus crachás em cordões dependurados no pescoço. Cada crachá permanece próximo ao corpo do seu usuário, porém não preso a ele. Os crachás ficam na altura do tórax.
  
@@ -112,7 +110,7 @@ A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \te
 
  O Laboratório de Automação e Robótica (LARA) foi o local para simulação do ambiente de teste do sistema criado. Especificamente, a metade sul do laboratório, onde se encontram os ambientes de estudo geral e a sala de reuniões.
  
- Esta parte do laboratório foi subdividida em três ambientes: a Sala de Reuniões (1), Ala Principal (2) e o Corredor de Mesas (3), como pode ser observado na planta baixa da figura \ref{fig:LARA_planta}.
+ Esta parte do laboratório foi subdividida em quatro ambientes: o ambiente externo (0), a Sala Principal (1), Sala de Reuniões (2) e o Corredor de Baias (3), como pode ser observado na planta baixa da figura \ref{fig:LARA_planta}.
 
   \begin{figure}[H]
     \centering
@@ -137,12 +135,17 @@ O ambiente do laboratório pode ser melhor visualizado nas figuras \ref{fig:LARA
     \label{fig:LARA2}
 \end{figure}
 
+As três leitoras foram designadas para tratar os dados das transições. A leitora 1 (L1) trata os dados da transição entre o Ambiente Externo (0) e a Sala Principal (1); a Leitora 2 (L2) é responsável por capturar os dados da transição entre a Sala Principal (1) e a Sala de Reuniões (2); a Leitora 3 registra os cartões que passam pela transição entre a Sala Principal (1) e o Corredor de Baias (3). Cada leitora é representada por um retângulo cinza na figura \ref{fig:LARA_planta} e possui duas antenas para registrar as \textit{tags} que passam na região.
 
+As antenas foram dispostas em locais estratégicos para obter-se as leituras mais precisas, nos locais de transição de interesse. Estes locais são nas portas ou passagens onde estão as fronteiras dos ambientes definidos. As antenas podem ser vistas como retângulos pretos de borda cinza na figura \ref{fig:LARA_planta} e pelo desenho da leitora real nas figuras \ref{fig:LARA1} e \ref{fig:LARA1}.
 
+As leitoras da transição entre os ambientes Sala Principal (1) e Sala de Reuniões (2) e da transição entre os ambientes Sala Principal (1), Corredor de Baias (3) foram instaladas em posições opostas da sala para minimizar a ocorrência de leitura das \textit{tags} pelas duas leitoras ao mesmo tempo.
 
-
- 
  \subsection{Elaboração do Software}
+ 
+ A tecnologia RAIN RFID, geralmente utilizada para aplicações de \textit{IoT} (Internet das coisas - \textit{Internet of Things} em inglês), exige a implementação de um \textit{Middleware} para conectar os dados crus das \textit{tags} registrados pelas leitoras RFID às aplicações de alto nível e de computação em nuvem, como pode ser observado na figura \ref{fig:RFID-Middleware} do capítulo anterior, sessão \ref{section: RFID}.
+ 
+ A estratégia utilizada foi baseada na estratégia
  
 
  

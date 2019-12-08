@@ -12,7 +12,7 @@
 
  Uma alternativa possível é o uso de RFID. Esta é uma tecnologia que torna-se mais eficiente, acessível e popular a cada dia. O monitoramento posicional de objetos dentro de uma loja ou armazém tornou-se uma prática possível com RFID passivo, prática que é aplicada com soluções comerciais disponíveis no mercado.
  
-\section{RFID}
+\section{RFID} \label{section: RFID}
 
 A comunicação do tipo Identificação por Radiofrequência – \textit{Radio Frequency Identification} (RFID) – é um tipo de comunicação sem fio por sinais de rádio. O RFID é uma alternativa de identificação útil em aplicações que exigem a leitura de grandes quantidades de dados \cite{rao1999overview}. 
 
@@ -21,7 +21,7 @@ A composição geral do RFID é feita por uma \textit{TAG} ou etiqueta e uma lei
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{figs/Fundamentos/Composicao.png}
-    \caption{\textcolor{red}{Composição básica de um sistema RFID. (Fonte: EPC-RFID...)}}
+    \caption{\textcolor{red}{Composição básica de um sistema RFID. (Adaptado de EPC-RFID.Info \cite{EPC-RFID-link})}}
     \label{fig:ComposicaoRFID}
 \end{figure}
 
@@ -40,7 +40,7 @@ De acordo com Chawla e Ha \cite{chawla2007overview}, o sistema RFID consiste em 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Fundamentos/RFIDdetails.png}
-    \caption{\textcolor{red}{Composição básica de um sistema RFID. (Chawla e Ha, 2007)}}
+    \caption{\textcolor{red}{Composição básica de um sistema RFID. (Adaptado de Chawla e Ha \cite{chawla2007overview})}}
     \label{fig:DetalhesRFID}
 \end{figure}
 
@@ -51,25 +51,164 @@ Vogt \cite{vogt2002multiple}, em seu trabalho, investigou a aplicabilidade da RF
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{figs/Fundamentos/RFID.png}
-    \caption{\textcolor{red}{RFID - . (Fonte: Adaptado de Chen et al., 2008) }}
-    \label{fig:AntenaThresholdCoverage}
+    \caption{\textcolor{red}{RFID - . (Adaptado de Chen et al. \cite{chenUsingRFID})}}
+    \label{fig:RFID-Middleware}
 \end{figure}
 
 
-\subsection{RAIN RFID}
+\subsection{RAIN RFID e IoT}
 
 O padrão RAIN (acrônimo para \textit{RAdio frequency IdentificatioN} - Identificação por radiofrequência) é a união de diferentes tipos de hardware e software que possuem o propósito de ligar o meio RFID UHF com a computação em nuvem. É padronizada pela organização global de mesmo nome (RAIN) com o objetivo de popularizar o uso de RFID. \cite{RAIN}
 
+RAIN RFID foi desenvolvido principalmente para aplicações de internet das coisas (IoT - \textit{Internet of things} em inglês). IoT é, segundo Gubbi, et. al. \cite{gubbi2013internet}:
+
+\begin{quote}
+    "Interconexão de dispositivos de detecção e atuação, oferecendo a capacidade de compartilhar informações entre plataformas por meio de uma estrutura unificada, desenvolvendo uma imagem operacional comum para permitir aplicativos inovadores. Isso é conseguido através da detecção onipresente e contínua, análise de dados e representação de informações com a computação em nuvem como a estrutura unificadora."
+\end{quote}
+
 \subsection{\textit{TAGs}}
-TAGs, também conhecidas como transponders, são etiquetas ou chips microprocessadores de identificação. Esses dispositivos recebem sinal de rádio e transmitem, automaticamente, um sinal diferente. Cada TAG possui um número serial de identificação que a difere de outras. \cite{chawla2007overview}. Esses objetos podem armazenar informações como \textit{serial number} (número serial), \textit{model number} (número do modelo), bem como outras características como: data, cor, tamanho e preço. A TAG RFID é classificada de acordo com sua memória, tipo de comunicação e uso de energia, como é possível visualizar na tabela \textcolor{red}{NUMERO DA TABELA}.  \cite{AhmedIntegrationStreamMapping}.
+TAGs, também conhecidas como transponders, são etiquetas ou chips microprocessadores de identificação. Esses dispositivos recebem sinal de rádio e transmitem, automaticamente, um sinal diferente. Cada TAG possui um número serial de identificação que a difere de outras. \cite{chawla2007overview}. Esses objetos podem armazenar informações como \textit{serial number} (número serial), \textit{model number} (número do modelo), bem como outras características como: data, cor, tamanho e preço. A TAG RFID é classificada de acordo com sua memória, tipo de comunicação e uso de energia, como é possível visualizar na tabela \ref{tab:comparativoTags}  \cite{AhmedIntegrationStreamMapping}.
+
+ 
+\begin{table}[H]
+\centering
+\caption{Classificação de TAGs RFID (Adaptado de \cite{AhmedIntegrationStreamMapping})}
+\label{tab:comparativoTags}
+\begin{tabular}{p{4cm}|p{6cm}}
+\hline
+\multicolumn{2}{c}{\cellcolor{lightgray}{Origem da alimentação elétrica}} \\ \hline
+Passiva         &   Alimentada pela leitora através do próprio sinal de radiofrequência. A energia do sinal capturada pela antena da TAG alimenta um         \\ \hline
+Semi-Passiva    &   text    \\ \hline
+Ativa           &   text    \\ \hline
+\multicolumn{2}{c}{\cellcolor{lightgray}{Título}} \\ \hline
+1       &   2       \\ \hline
+data    &   text    \\ \hline
+\multicolumn{2}{c}{\cellcolor{lightgray}{Título}} \\ \hline
+1       &   2       \\ \hline
+data    &   text    \\ \hline
+\end{tabular}
+\end{table}
 
 
-\huge \textcolor{red}{[Tabela]} \normalsize
 
-É possível classificar as TAGs em três tipos, como pode ser visto na tabela \textcolor{red}{NUMERO DA TABELA}: ativas, passivas e semi-passivas \cite{chawla2007overview}.  Existem vários tipos de TAGS ativas (alimentadas por baterias) e passivas, em várias faixas de frequência, presentes no mercado \cite{rao1999overview}. A Figura \textcolor{red}{NUMERO DA FIGURA}, logo abaixo, mostra exemplos de TAGS ativas e passivas.
+É possível classificar as TAGs em três tipos, como pode ser visto na tabela \ref{tab:comparativoTags}: ativas, passivas e semi-passivas \cite{chawla2007overview}.  Existem vários tipos de TAGS ativas (alimentadas por baterias) e passivas, em várias faixas de frequência, presentes no mercado \cite{rao1999overview}. A Figura \textcolor{red}{NUMERO DA FIGURA}, logo abaixo, mostra exemplos de TAGS ativas e passivas.
+
+\textcolor{red}{fotos da tag ativa}
+
+\textcolor{red}{fotos da tag passiva}
 
 Segundo Rao \cite{rao1999overview}, TAGS ativas, como as apresentadas na Figura 1A, tem como vantagens o fornecimento de faixas de leituras maiores (explicar o porquê isso é interessante). Como desvantagem, elas podem ser bem mais caras por exigirem o uso de baterias \cite{rao1999overview}. Uma etiqueta RFID passiva, por sua vez, usará a energia das ondas de rádio do interrogador para retransmitir suas informações armazenadas de volta ao interrogador \cite{EPC-RFID-link}. 
+
+
+
 
 \subsection{Antenas}
 
 A antena é capaz de perceber o sinal de uma TAG dentro de um determinado raio de cobertura. Cada antena é única nesse sentido...
+
+
+\subsection{Efeitos causados por materiais e frequência de operação}
+
+É amplamente conhecido na indústria do RFID e de outras tecnologias que trabalham com RF (radiofrequência - \textit{radiofrequency} em inglês) que os materiais presentes no ambiente onde se propagam os sinais transmitidos. Por exemplo, é praticamente um consenso o fato de que os meios aquosos absorvem os sinais, e os metais os refletem.
+
+Estudos com materiais mostram que podem existir nove tipos de perdas no sinal, como mostra Sanghera em seu livro\cite{book:SangheraRFID+}:
+\begin{itemize}
+    \item \textbf{Absorção:} Energia do sinal absorvida pelo meio;
+    \item \textbf{Atenuação:} Diminuição da amplitude do sinal devido à absorção e dispersão;
+    \item \textbf{Efeitos Dielétricos:} Capacidade do meio de reter carga. Gera atraso do sinal;
+    \item \textbf{Difração:} "Dobra" de um sinal de radiofrequência ao atingir uma quina ou pequeno orifício;
+    \item \textbf{Perda de espaço livre:} Diminuição da densidade do sinal devido à característica de propagação do sinal para todos os lados;
+    \item \textbf{Interferência:} Ocorre no encontro de duas ondas de radiofrequência, pode ser construtiva ou destrutiva;
+    \item \textbf{Reflexão:} Retorno do sinal em um ângulo isóceles ao de incidência em uma superfície plana. Geralmente ocorre no chão, teto e paredes;
+    \item \textbf{Refração:} mudança de direção de trajetória do sinal, entretanto permeando o meio causador da refração;
+    \item \textbf{Espalhamento:} Absorção e re-emissão do sinal, em direções aleatórias.
+\end{itemize}
+    
+Sanghera mostra ainda uma tabela contendo a influência de cada material no sinal de radiofrequência \cite{book:SangheraRFID+}. Esta tabela é adaptada e apresentada a seguir (Tabela \ref{tab:InterfMateriais}).
+
+\begin{table}[H]
+\centering
+\caption{Efeito dos materiais nos sinais de RFID (Adaptado de \cite{book:SangheraRFID+})}
+\label{tab:InterfMateriais}
+\begin{tabular}{p{5cm} p{7cm}}
+\hline
+\cellcolor{lightgray}{Material} & \cellcolor{lightgray}{Efeito no sinal RF}   \\ \hline
+Papelão         &   Absorção        \\
+Líquido condutivo    &   Absorção        \\
+Vidro           &  Atenuação        \\
+Conjunto de latas & Reflexão em múltiplas direções \\
+Corpo humano ou animal & Absorção, dessintonização e reflexão \\ 
+Metal & Reflexão \\
+Plástico & Dessintonização devido ao efeito dielétrico \\ \hline
+\end{tabular}
+\end{table}
+
+ Um estudo conduzido por Fletcher \cite{fletcher2005study} questiona, contudo, os efeitos dos sinais RF nos meios aquosos, e portanto, os efeitos no corpo humano e de animais por consequência. Ele afirma que, ao contrário do que se acredita, os líquidos interferem nas leituras dos sinais de RFID majoritariamente devido aos efeitos de reflexão e refração, enquanto o consenso é de que meios aquosos absorviam os sinais, principalmente.
+ 
+ De uma forma ou de outra, as leituras RFID obtidas são de baixa qualidade quando os transpônderes ou as antenas estão próximas de meios aquosos ou pessoas e animais. Esse é o principal motivo de o monitoramento de localização por RFID, ou outras tecnologias RF, não possuir muita aderência para o propósito de monitorar pessoas enquanto a tecnologia avança a passos largos no monitoramento de produtos e aplicações de \textit{IoT}, visto que estes últimos são menos suscetíveis à perda de sinal.
+ 
+ O livro de Thornton e Sanghera \cite{thornton2011cheat} mostra a influência causada pela escolha da frequência de funcionamento do sistema. Os protocolos RFID preveem o funcionamento da tecnologia em quatro faixas de frequência:
+ 
+ \begin{itemize}
+     \item Baixa frequência (LF - \textit{Low Frequency})
+     \begin{itemize}
+         \item opera a 125 kHz ou 134 kHz para dispositivos RFID
+         \item Baixa distorção devido a água
+         \item Curto alcance (até 10 cm)
+         \item Utilizado para identificação de pessoas e animais à curta distância
+     \end{itemize}
+     \item Alta frequência (HF - \textit{High Frequency})
+     \begin{itemize}
+         \item opera a 13.56 MHz para dispositivos RFID
+         \item alcance de até 3m
+         \item sinal RF com comprimento de onda pequeno / baixa capacidade de penetração em materiais
+         \item mais opções de velocidade de leitura em relação à baixa frequência
+         \item utilizado em controle de acesso e rastreio de itens como bagagens
+     \end{itemize}
+     \item UHF (em inglês \textit{Ultra High Frequency} - Frequência Ultra Alta em tradução livre para o português)
+     \begin{itemize}
+         \item Diferentes frequências em diferentes países
+         \begin{itemize}
+             \item Faixa de 860-960MHz
+             \item 902-928MHz no Brasil (geralmente 915MHz)
+         \end{itemize}
+         \item alta distorção devido a água
+         \item a frequência de operação depende do país onde o equipamento é homologado
+         \item maior alcance que LF e HF
+         \item usado para gerenciamento de estoque e armazéns
+     \end{itemize}
+     \item Microondas
+     \begin{itemize}
+         \item Faixa de 2,44-5,80GHz para dispositivos RFID
+         \item Alta velocidade de leitura
+         \item Longo alcance
+         \item baixo desempenho próximo a água
+         \item utilizado para identificação de veículos e \textit{supply chain} (em português, "cadeia de suprimentos" ou "cadeia de logística")
+     \end{itemize}
+ \end{itemize}
+
+
+A imagem \ref{fig:impactoFrec} de Oliveira e Rocha \cite{TG2013OliveiraERocha}, traduzida da original no livro de Thornton e Sanghera \cite{thornton2011cheat}, simplifica os conceitos do impacto da frequência de operação no sinal RFID.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figs/Fundamentos/frequencia.png}
+    \caption{Impacto da frequência de operação nas leituras RFID. (Fonte: Oliveira e Rocha \cite{TG2013OliveiraERocha}, adaptado de Thornton e Sanghera \cite{thornton2011cheat})}
+    \label{fig:impactoFrec}
+\end{figure}
+    
+    
+\section{Localização \textit{indoor}}
+
+O rastreio e localização de pessoas em ambientes fechados é algo fortemente desejado desde o surgimento das tecnologias de localização por sinais de radiofrequência. É imaginado um futuro onde equipes de segurança sabem exatamente onde resgatar uma pessoa com dificuldades, dentro de um edifício; sistemas de ar-condicionado eficientes dimensionam automaticamente as suas potências baseados na ocupação do local aumentando a eficiência energética; mapas de ambientes fechados públicos que indicam o caminho até o destino final interno.
+
+A localização de pessoas e objetos já está muito avançada para ambientes externos, com exemplos de muito sucesso como o sistema de posicionamento global - GPS (\textit{Global Positioning System} em inglês) e seus similares (Galileo, Glonass, Compass), e também do Cell-ID - tecnologia de localização de dispositivos GSM/WCDMA/CDMA por triangulação de torres de celular.
+
+Contudo, a localização em ambientes fechados ainda é muito restrita, principalmente devido às restrições de comunicação por sinais RF em ambientes passíveis de obstrução por objetos e fontes de reflexão e demais tipos de interferência. Problemas como a atenuação e dispersão do sinal, sinais duplos ou múltiplos, e a grande quantidade de dispositivos comunicando-se em um pequeno espaço em algumas aplicações (o que gera conflito de diversas tentativas de estabelecimento de comunicação ao mesmo tempo) dificultam o desenvolvimento de uma tecnologia definitiva para esta aplicação.
+
+Para desviar dos empecilho, soluções específicas para diversas aplicações são criadas. A indústria larga na frente, com sistemas de rastreio e posicionamento de produtos e equipamentos, como em armazéns e linhas de produção. O comércio também já possui soluções para prevenção de perdas e roubos, e começa a aplicar os conceitos de rastreamento de produtos de armazéns para identificar roupas e sapatos em estantes, por exemplo. A área de soluções para cidades pesquisa tecnologias IoT.
+
+A área de localização de pessoas possui 
+
+\subsection{Estratégias}
+
