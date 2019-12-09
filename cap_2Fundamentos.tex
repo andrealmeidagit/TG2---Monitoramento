@@ -8,45 +8,49 @@
  
  Existem diversos modos de estimar a ocupação de um certo ambiente por pessoas. Sensores de presença infravermelhos passivos já são amplamente utilizados comercialmente em aparelhos de ar-condicionado, especialmente modelos split para uso em pequenas salas.
  
- Sensores passivos de presença, entretanto, não permitem um controle mais fino da atuação do ar-condicionado. Eles auxiliam na economia de energia indicando a presença ou não de alguma pessoa ou animal no ambiente, mas sem indicar quantas pessoas etão no local ou quais são suas características. Além disso estão muito sujeitos a interferências, causando falsos positivos ou falsos negativos, devido ao modo de atuação passivo que apenas verifica a emissão de radiação infravermelha em comprimentos de onda próximos ao dos humanos.
+ Sensores passivos de presença, entretanto, não permitem um controle mais acurado da atuação do ar-condicionado. Eles auxiliam na economia de energia indicando a presença, ou não, de alguma pessoa ou animal no ambiente, mas sem indicar quantas pessoas estão presentes no local ou quais são suas características físicas. Além disso estão muito sujeitos a interferências, causando falsos positivos ou falsos negativos, devido ao modo de atuação passivo que apenas verifica a emissão de radiação infravermelha em comprimentos de onda próximos ao dos humanos.
 
- Uma alternativa possível é o uso de RFID. Esta é uma tecnologia que torna-se mais eficiente, acessível e popular a cada dia. O monitoramento posicional de objetos dentro de uma loja ou armazém tornou-se uma prática possível com RFID passivo, prática que é aplicada com soluções comerciais disponíveis no mercado.
+ Uma alternativa possível é o uso de RFID. Esta é uma tecnologia que se torna mais eficiente, acessível e popular a cada dia. O monitoramento posicional de objetos dentro de uma loja ou armazém tornou-se uma prática possível com RFID passivo, prática que é aplicada com soluções comerciais disponíveis no mercado.
  
 \section{RFID} \label{section: RFID}
 
 A comunicação do tipo Identificação por Radiofrequência – \textit{Radio Frequency Identification} (RFID) – é um tipo de comunicação sem fio por sinais de rádio. O RFID é uma alternativa de identificação útil em aplicações que exigem a leitura de grandes quantidades de dados \cite{rao1999overview}. 
 
-A composição geral do RFID é feita por uma \textit{TAG} ou etiqueta e uma leitora (reader) que são incorporadas com um transmissor e um receptor no computador \cite{EPC-RFID-link}.
+A composição geral do RFID é feita por uma \textit{TAG} (etiqueta ou transpônder) e uma leitora (\textit{reader}) que são incorporadas com um transmissor e um receptor \cite{EPC-RFID-link}. A leitora (ou interrogadora) possui uma antena para comunicação com as TAGs e, na maioria dos casos, uma saída para comunicação com um computador ou servidor.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{figs/Fundamentos/Composicao.png}
-    \caption{\textcolor{red}{Composição básica de um sistema RFID. (Adaptado de EPC-RFID.Info \cite{EPC-RFID-link})}}
+    \caption{Composição básica de um sistema RFID. (Adaptado de EPC-RFID \cite{EPC-RFID-link})}
     \label{fig:ComposicaoRFID}
 \end{figure}
 
 
-As primeiras aplicações comerciais de RFID, como artigo eletrônico de vigilância (Electronic Article Surveillance), aconteceram no final da década de 1960, desenvolvidas por empresas como: Kongo, Sensormatic (by Johnson Controls) e Checkpoint \cite{chawla2007overview}.
+As primeiras aplicações comerciais de RFID, como artigo eletrônico de vigilância (EAS - \textit{Electronic Article Surveillance}), aconteceram no final da década de 1960, desenvolvidas por empresas como: Kongo, Sensormatic (by Johnson Controls) e Checkpoint \cite{chawla2007overview}.
 
 De acordo com Chawla e Ha \cite{chawla2007overview}, o sistema RFID consiste em leitoras e TAGS. A leitora tem como função se comunicar na faixa de alcance sem fio e coletar informações sobre os objetos aos quais as TAGS estão anexadas (ex.: entrada e saída de pessoas de um estabelecimento).
+
+O funcionamento simplificado do RFID passivo pode ser observado na figura \ref{fig:DiagramaRFID}. Um gerador de sinais de radiofrequência (RF - \textit{radiofrequency}) emite um sinal à um transpônder com impedância variável e um codificador de identidade. O sinal emitido excita o oscilador presente na TAG,que por sua vez reflete o sinal modificado com as informações de identidade da TAG. O sinal de resposta é capturado por uma antena, amplificado e decodificado. A informação de identidade da TAG pode então ser processada, apresentada ou armazenada.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{figs/Fundamentos/RFIDdiagram.png}
-    \caption{Diagrama de rede de uma comunicação RFID. (Adaptado de Landt, Jeremy \cite{landt2005history}}
+    \caption{Diagrama de rede de uma comunicação RFID. (Adaptado de Landt, Jeremy \cite{landt2005history})}
     \label{fig:DiagramaRFID}
 \end{figure}
+
+A figura \ref{fig:DetalhesRFID} mostra os elementos internos dos dispositivos de um sistema RFID. Nela é possível observar o trajeto de dados da energização da bobina da TAG e envio de informação através da variação de potência do campo magnético. A energização alimenta o circuito da TAG que é composto de carga, codificador RF e chip de controle, memória e criptografia. O circuito excitado da TAG reflete o sinal codificado e é capturado pela bobina da antena da leitora, que interpreta o sinal e retransmite a informação em uma interface de rede para um computador.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Fundamentos/RFIDdetails.png}
-    \caption{\textcolor{red}{Composição básica de um sistema RFID. (Adaptado de Chawla e Ha \cite{chawla2007overview})}}
+    \caption{Estrutura interna básica dos elementos de um sistema RFID. (Adaptado de Chawla e Ha \cite{chawla2007overview})}
     \label{fig:DetalhesRFID}
 \end{figure}
 
+\subsection{\textit{Middlewre}}
 
-
-Vogt \cite{vogt2002multiple}, em seu trabalho, investigou a aplicabilidade da RFID passiva na identificação de múltiplos objetos.
+Chen et al. \cite{chenUsingRFID} define RFID como o conjunto de TAGs, leitoras, \textit{middleware} e sistema de aplicação, como pode ser visto na figura \ref{fig:RFID-Middleware}.
 
 \begin{figure}[H]
     \centering
@@ -55,19 +59,22 @@ Vogt \cite{vogt2002multiple}, em seu trabalho, investigou a aplicabilidade da RF
     \label{fig:RFID-Middleware}
 \end{figure}
 
+\textit{Middleware} é o \textit{software} que liga o Sistema Operacional às aplicações. É comum definir um \textit{middleware} como um "encanamento" que leva dados de um ponto a outro. \cite{Middleware}
+
+No caso do RFID, o \textit{middleware} é um \textit{software} que interpreta e organiza os dados enviados pelas leitoras. Ele realiza a filtragem e agregação da informação, a coordenação da leitura, o roteamento de dados e integração e o gerenciamento do processo. Ao final do processamento, ele disponibiliza os dados para aplicações que podem ser, por exemplo, ERPs (em inglês: \textit{Enterprise Resource Planning} - Planejamento de Recursos Empresariais), sistemas de informação ou um \textit{software} de localização de pessoas em ambientes fechados.
 
 \subsection{RAIN RFID e IoT}
 
 O padrão RAIN (acrônimo para \textit{RAdio frequency IdentificatioN} - Identificação por radiofrequência) é a união de diferentes tipos de hardware e software que possuem o propósito de ligar o meio RFID UHF com a computação em nuvem. É padronizada pela organização global de mesmo nome (RAIN) com o objetivo de popularizar o uso de RFID. \cite{RAIN}
 
-RAIN RFID foi desenvolvido principalmente para aplicações de internet das coisas (IoT - \textit{Internet of things} em inglês). IoT é, segundo Gubbi, et. al. \cite{gubbi2013internet}:
+RAIN RFID foi desenvolvido principalmente para aplicações de internet das coisas (IoT - \textit{Internet of things} em inglês). IoT é, segundo Gubbi, \textit{et al.} \cite{gubbi2013internet}:
 
 \begin{quote}
-    "Interconexão de dispositivos de detecção e atuação, oferecendo a capacidade de compartilhar informações entre plataformas por meio de uma estrutura unificada, desenvolvendo uma imagem operacional comum para permitir aplicativos inovadores. Isso é conseguido através da detecção onipresente e contínua, análise de dados e representação de informações com a computação em nuvem como a estrutura unificadora."
+    "Interconexão de dispositivos de detecção e atuação, oferecendo a capacidade de compartilhar informações entre plataformas por meio de uma estrutura unificada, desenvolvendo uma imagem operacional comum para permitir aplicativos inovadores. Isso é conseguido através da detecção onipresente e contínua, análise de dados e representação de informações com a computação em nuvem como a estrutura unificadora." \cite{gubbi2013internet}
 \end{quote}
 
 \subsection{\textit{TAGs}}
-TAGs, também conhecidas como transponders, são etiquetas ou chips microprocessadores de identificação. Esses dispositivos recebem sinal de rádio e transmitem, automaticamente, um sinal diferente. Cada TAG possui um número serial de identificação que a difere de outras. \cite{chawla2007overview}. Esses objetos podem armazenar informações como \textit{serial number} (número serial), \textit{model number} (número do modelo), bem como outras características como: data, cor, tamanho e preço. A TAG RFID é classificada de acordo com sua memória, tipo de comunicação e uso de energia, como é possível visualizar na tabela \ref{tab:comparativoTags}  \cite{AhmedIntegrationStreamMapping}.
+TAGs, também conhecidas como transpônderes, são etiquetas ou chips microprocessadores de identificação. Esses dispositivos recebem sinal de rádio e transmitem, automaticamente, um sinal diferente. Cada TAG possui um número serial de identificação que a difere de outras. \cite{chawla2007overview}. Esses objetos podem armazenar informações como \textit{serial number} (número serial), \textit{model number} (número do modelo), bem como outras características como: data, cor, tamanho e preço. A TAG RFID é classificada de acordo com sua memória, tipo de comunicação e uso de energia, como é possível visualizar na tabela \ref{tab:comparativoTags}  \cite{AhmedIntegrationStreamMapping}.
 
  
 \begin{table}[H]
@@ -77,7 +84,7 @@ TAGs, também conhecidas como transponders, são etiquetas ou chips microprocess
 \begin{tabular}{p{3cm}p{9cm}}
 \hline
 \multicolumn{2}{c}{\cellcolor{lightgray}{Origem da alimentação elétrica}} \\ \hline
-Passiva         &   Alimentada pela leitora através do próprio sinal de radiofrequência. Também chamada de 'reflexiva', 'alimentada por feixe' ou de 'retroespalhamento'.     \\ \hline
+Passiva         &   Alimentada pela leitora através do próprio sinal de radiofrequência. Também chamada de 'reflexiva', 'alimentada por feixe' ou de 'retroespalhamento' (\textit{backscattering}).     \\ \hline
 Semi-Passiva    &   Utiliza uma bateria para manter a memória na etiqueta ou alimentar os componentes eletrônicos que permitem que a etiqueta module o sinal refletido.    \\ \hline
 Ativa           &   Alimentada por uma bateria interna. Possui maior alcance de leitura e é mais cara que as TAGs passivas. As baterias devem ser substituídas periodicamente.    \\ \hline
 \multicolumn{2}{c}{\cellcolor{lightgray}{Tipo de Memória}} \\ \hline
@@ -137,10 +144,12 @@ Já os transpônderes de n-bits podem possuir de poucos bits até 128 kb a depen
 
 A antena é capaz de perceber o sinal de uma TAG dentro de um determinado raio de cobertura. Cada antena é única nesse sentido...
 
+\textcolor{red}{TO BE CONTINUED} %TODO
+
 
 \subsection{Efeitos causados por materiais e frequência de operação}
 
-É amplamente conhecido na indústria do RFID e de outras tecnologias que trabalham com RF (radiofrequência - \textit{radiofrequency} em inglês) que os materiais presentes no ambiente onde se propagam os sinais transmitidos. Por exemplo, é praticamente um consenso o fato de que os meios aquosos absorvem os sinais, e os metais os refletem.
+É amplamente conhecido na indústria do RFID e de outras tecnologias que trabalham com RF (radiofrequência - \textit{radiofrequency} em inglês) que os materiais presentes no ambiente onde se propagam os sinais transmitidos interferem com esse sinal.
 
 Estudos com materiais mostram que podem existir nove tipos de perdas no sinal, como mostra Sanghera em seu livro\cite{book:SangheraRFID+}:
 \begin{itemize}
@@ -155,7 +164,7 @@ Estudos com materiais mostram que podem existir nove tipos de perdas no sinal, c
     \item \textbf{Espalhamento:} Absorção e re-emissão do sinal, em direções aleatórias.
 \end{itemize}
     
-Sanghera mostra ainda uma tabela contendo a influência de cada material no sinal de radiofrequência \cite{book:SangheraRFID+}. Esta tabela é adaptada e apresentada a seguir (Tabela \ref{tab:InterfMateriais}).
+Sanghera mostra ainda uma tabela contendo a influência de cada material no sinal de radiofrequência \cite{book:SangheraRFID+} que é adaptada e apresentada a seguir (Tabela \ref{tab:InterfMateriais}).
 
 \begin{table}[H]
 \centering
@@ -227,19 +236,104 @@ A imagem \ref{fig:impactoFrec} de Oliveira e Rocha \cite{TG2013OliveiraERocha}, 
     \caption{Impacto da frequência de operação nas leituras RFID. (Fonte: Oliveira e Rocha \cite{TG2013OliveiraERocha}, adaptado de Thornton e Sanghera \cite{thornton2011cheat})}
     \label{fig:impactoFrec}
 \end{figure}
+
+\subsection{RSSI}
+
+O Indicador de Intensidade do Sinal Recebido (\textit{Received Signal Strength Indication}), em poucas palavras, é a medida de quão eficiente um dispositivo pode ser na detecção de um sinal/ruído.
+
+Segundo Buffi \cite{buffi2018rssi}, existem duas impedâncias intrínsecas à cada TAG que geralmente correspondem à carga de impedância correspondente ($Z_{CM}$) e uma carga de impedância de curto-circuito ($Z_{SC}$). Durante a comunicação entre a leitora RFID e a TAG alterna-se entre as duas impedâncias, como mostra a figura \ref{fig:rssiFUND}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figs/Fundamentos/rssi.PNG}
+    \caption{(a) Representação esquemática de uma TAG equipada com uma antena, um chip RFID e um leitor, este último constituído por uma antena, um circulador, um amplificador de potência para o sinal transmitido e amplificador de baixo ruído para o sinal recebido. (b) Matriz de impedância equivalente que representa a antena do leitor, a antena do TAG e o canal de propagação entre elas. Para gerar um \textit{backscattering} modulado, a antena da TAG é conectada a uma carga de impedância combinada conjugada ($Z_{CM}$) ou a um curto-circuito ($Z_{SC}$). \cite{buffi2018rssi}}
+    \label{fig:rssiFUND}
+\end{figure}
+
+O sinal RSSI é calculado a partir do módulo da diferença dos coeficientes de refração $\Gamma$ as amplitudes do sinal enviado e do sinal recebido, como mostra a equação \ref{eq:rssiFUNDa}. 
+
+\begin{equation}
+    RSSI = k {|\Gamma_{CM}(x,y) - \Gamma_{SC}(x,y)|}^2
+    \label{eq:rssiFUNDa}
+\end{equation}
+
+Na equação \ref{eq:rssiFUNDa} $k$ representa uma constante, $x$ e $y$ representam as coordenadas da TAG em relação à leitora, e $\Gamma_{CM}$ e $\Gamma_{SC}$ representam os coeficientes de refração do sinal de retorno quando a TAG utiliza a carga de impedância combinada conjugada ($Z_{CM}$) ou o curto-circuito ($Z_{SC}$). O coeficiente $\Gamma$ é proporcional à relação entre as amplitudes do sinal enviado pela leitora e pelo sinal de retorno da TAG lido pela antena, de acordo com a equação \ref{eq:rssiFUNDb}.
+
+\begin{equation}
+    \Gamma = \frac{b_1}{a_1}
+    \label{eq:rssiFUNDb}
+\end{equation}
+
+Na equação \ref{eq:rssiFUNDb} $a_1$ é a amplitude do sinal enviado pela leitora e $b_1$ é a amplitude do sinal de resposta capturado pela antena.
     
+\section{Rede de Petri}
+    
+A Rede de Petri consiste em uma ferramenta gráfica e matemática que possui inúmeras aplicações. Segundo Francês \cite{Frances}, a representação gráfica básica de uma rede de Petri compreende dois componentes principais: um ativo (transição) - que graficamente é uma barra - e um passivo (lugar), graficamente representado pelo círculo. 
+
+Algumas de suas aplicações são a de avaliar desempenhos, possibilitar a concepção de software em tempo real e/ou distribuído, avaliar o gerenciamento bases de dados, interfaces homem-máquina, atuar em sistemas de informação, controle, logística e transporte, além de outras inúmeras funcionalidades. As vantagens do uso podem ser descritas brevemente a seguir: \cite{Cardoso1997}
+
+\begin{itemize}
+    \item descrição de ordem parcial em eventos, possibilitando avaliar a flexibilidade;
+    \item representação explícita dos estados;
+    \item facilitação nos níveis da estrutura hierárquica do controle;
+    \item utilização de uma única família de ferramentas; 
+    \item descrição precisa e formal das sincronizações, garantindo a segurança do funcionamento;
+\end{itemize}
+    
+\section{Efeito Doppler}
+
+O Efeito Doppler ocorre quando ondas são emitidas ou refletidas por um objeto em movimento. É um fenômeno físico importante para a análise da detecção de sinais em movimento.
+
+As leitoras de RFID geralmente possuem capacidade de calcular o desvio de fase do sinal de resposta de \textit{backscatter} das TAGs, de acordo com a equação \ref{eq:desvioFase}. A partir dessa informação, é possível obter o valor da frequência Dopler causada pelo deslocamento da TAG. \cite{nikitin2010phase} \cite{tesch2015rfid}
+
+\begin{equation}
+    \theta = \theta_{Prop} + \theta_{o} + \theta_{BS}
+    \label{eq:desvioFase}
+\end{equation}
+
+Na equação \ref{eq:desvioFase} $\theta$ representa a fase do sinal recebido da TAG, $\theta_{Prop}$ é a fase acumulada devido à propagação de ondas eletromagnéticas, $\theta_{o}$ é o deslocamento de fase (\textit{offset}) nos cabos e antenas e $\theta_{BS}$ é a fase de retroespalhamento (\textit{backscatter}) da modulação de TAG. \cite{nikitin2010phase} \cite{tesch2015rfid}
+
+As leitoras RFID utilizam a fase do sinal de retorno $\theta$ para calcular a frequência Doppler através da equação \ref{eq:Doppler} a seguir.\cite{tesch2015rfid}
+
+\begin{equation}
+    f_D = \frac{\Delta \theta}{4 \pi \Delta T}
+    \label{eq:Doppler}
+\end{equation}
+
+Na equação \ref{eq:Doppler} $f_D$ é a frequência Doppler. Os valores de $\Delta \theta$ e $\Delta T$ podem ser obtidos com as equações \ref{eq:deltaTheta} e \ref{eq:DetaTe}, respectivamente.\cite{tesch2015rfid}
+
+\begin{equation}
+    \Delta \theta = \theta_2 - \theta_1
+    \label{eq:deltaTheta}
+\end{equation}
+
+\begin{equation}
+    \Delta t = t_2 - t_1
+    \label{eq:DetaTe}
+\end{equation}
+
+Na equação \ref{eq:deltaTheta}, $\theta_1$ e $\theta_2$ são as leituras de fase da TAG nas posições iniciais e finais de leitura, calculados a partir da equação \ref{eq:desvioFase}, como pode ser visualizado na figura \ref{fig:dopplerFund}. Na equação \ref{eq:DetaTe}, $t_1$ e $t_2$ correspondem aos tempos das leituras de $\theta_1$ e $\theta_2$ da equação \ref{eq:deltaTheta}. \cite{tesch2015rfid}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figs/Fundamentos/doppler.PNG}
+    \caption{Frequência Doppler calculada a partir da fase do sinal de retorno da TAG \cite{tesch2015rfid}}
+    \label{fig:dopplerFund}
+\end{figure}
+
+A figura \ref{fig:dopplerFund} mostra uma TAG em duas posições espaciais diferentes, em tempos $t_1$ e $t_2$ diferentes. Em cada posição o sinal de leitura retorna à antena com uma fase $\theta$ diferente.
     
 \section{Localização \textit{indoor}}
 
-O rastreio e localização de pessoas em ambientes fechados é algo fortemente desejado desde o surgimento das tecnologias de localização por sinais de radiofrequência. É imaginado um futuro onde equipes de segurança sabem exatamente onde resgatar uma pessoa com dificuldades, dentro de um edifício; sistemas de ar-condicionado eficientes dimensionam automaticamente as suas potências baseados na ocupação do local aumentando a eficiência energética; mapas de ambientes fechados públicos que indicam o caminho até o destino final interno.
+O rastreio e localização de pessoas em ambientes fechados é algo fortemente desejado desde o surgimento das tecnologias de localização por sinais de radiofrequência. É imaginado um futuro onde equipes de segurança saibam exatamente onde resgatar uma pessoa com dificuldades, dentro de um edifício; sistemas de ar-condicionado dimensionam automaticamente as suas potências baseados na ocupação do local aumentando a eficiência energética; mapas de ambientes fechados públicos que indicam o caminho até o destino final interno.
 
-A localização de pessoas e objetos já está muito avançada para ambientes externos, com exemplos de muito sucesso como o sistema de posicionamento global - GPS (\textit{Global Positioning System} em inglês) e seus similares (Galileo, Glonass, Compass), e também do Cell-ID - tecnologia de localização de dispositivos GSM/WCDMA/CDMA por triangulação de torres de celular.
-
-Contudo, a localização em ambientes fechados ainda é muito restrita, principalmente devido às restrições de comunicação por sinais RF em ambientes passíveis de obstrução por objetos e fontes de reflexão e demais tipos de interferência. Problemas como a atenuação e dispersão do sinal, sinais duplos ou múltiplos, e a grande quantidade de dispositivos comunicando-se em um pequeno espaço em algumas aplicações (o que gera conflito de diversas tentativas de estabelecimento de comunicação ao mesmo tempo) dificultam o desenvolvimento de uma tecnologia definitiva para esta aplicação.
+A localização de pessoas e objetos já está muito avançada para ambientes externos, com exemplos de muito sucesso como o sistema de posicionamento global - GPS (\textit{Global Positioning System} em inglês) e seus similares (Galileo, Glonass, Compass), e também do Cell-ID - tecnologia de localização de dispositivos GSM/WCDMA/CDMA por triangulação de torres de celular. Contudo, a localização em ambientes fechados ainda é muito restrita, principalmente devido às restrições de comunicação por sinais RF em ambientes passíveis de obstrução por objetos e fontes de reflexão e demais tipos de interferência. Problemas como a atenuação e dispersão do sinal, sinais duplos ou múltiplos, e a grande quantidade de dispositivos comunicando-se em um pequeno espaço em algumas aplicações (o que gera conflito de diversas tentativas de estabelecimento de comunicação ao mesmo tempo), dificultam o desenvolvimento de uma tecnologia definitiva para esta aplicação.
 
 Para desviar dos empecilho, soluções específicas para diversas aplicações são criadas. A indústria larga na frente, com sistemas de rastreio e posicionamento de produtos e equipamentos, como em armazéns e linhas de produção. O comércio também já possui soluções para prevenção de perdas e roubos, e começa a aplicar os conceitos de rastreamento de produtos de armazéns para identificar roupas e sapatos em estantes, por exemplo. A área de soluções para cidades pesquisa tecnologias IoT.
 
-A área de localização de pessoas possui 
+A área de localização de pessoas possui \textcolor{red}{TO BE CONTINUED} %TODO
 
 \subsection{Estratégias}
+
+\textcolor{red}{TO BE CONTINUED} %TODO
 
