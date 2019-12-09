@@ -74,30 +74,61 @@ TAGs, também conhecidas como transponders, são etiquetas ou chips microprocess
 \centering
 \caption{Classificação de TAGs RFID (Adaptado de \cite{AhmedIntegrationStreamMapping})}
 \label{tab:comparativoTags}
-\begin{tabular}{p{4cm}|p{6cm}}
+\begin{tabular}{p{3cm}p{9cm}}
 \hline
 \multicolumn{2}{c}{\cellcolor{lightgray}{Origem da alimentação elétrica}} \\ \hline
-Passiva         &   Alimentada pela leitora através do próprio sinal de radiofrequência. A energia do sinal capturada pela antena da TAG alimenta um         \\ \hline
-Semi-Passiva    &   text    \\ \hline
-Ativa           &   text    \\ \hline
-\multicolumn{2}{c}{\cellcolor{lightgray}{Título}} \\ \hline
-1       &   2       \\ \hline
-data    &   text    \\ \hline
-\multicolumn{2}{c}{\cellcolor{lightgray}{Título}} \\ \hline
-1       &   2       \\ \hline
-data    &   text    \\ \hline
+Passiva         &   Alimentada pela leitora através do próprio sinal de radiofrequência. Também chamada de 'reflexiva', 'alimentada por feixe' ou de 'retroespalhamento'.     \\ \hline
+Semi-Passiva    &   Utiliza uma bateria para manter a memória na etiqueta ou alimentar os componentes eletrônicos que permitem que a etiqueta module o sinal refletido.    \\ \hline
+Ativa           &   Alimentada por uma bateria interna. Possui maior alcance de leitura e é mais cara que as TAGs passivas. As baterias devem ser substituídas periodicamente.    \\ \hline
+\multicolumn{2}{c}{\cellcolor{lightgray}{Tipo de Memória}} \\ \hline
+Somente leitura       &   A memória é programada na fábrica e não pode ser modificada após sua fabricação. Geralmente armazena apenas 96 bits de informação.       \\ \hline
+Leitura-escrita    &   A leitora RFID pode ler e escrever na memória desta TAG. É possível armazenar uma quantidade maior de dados (de 32 kb a 128 kb). É mais cara que os chips do tipo somente leitura.   \\ \hline
+\multicolumn{2}{c}{\cellcolor{lightgray}{Tipo de Comunicação entre a TAG e a Leitora}} \\ \hline
+Indução       &   Acoplamento eletromagnético ou indutivo de proximidade. Utilizada em Bandas de frequência LF e HF.       \\ \hline
+Propagação    &   Propagação de ondas eletromagnéticas - campo distante. Opera nas faixas de frequência UHF e micro-ondas.   \\ \hline
 \end{tabular}
 \end{table}
 
 
 
-É possível classificar as TAGs em três tipos, como pode ser visto na tabela \ref{tab:comparativoTags}: ativas, passivas e semi-passivas \cite{chawla2007overview}.  Existem vários tipos de TAGS ativas (alimentadas por baterias) e passivas, em várias faixas de frequência, presentes no mercado \cite{rao1999overview}. A Figura \textcolor{red}{NUMERO DA FIGURA}, logo abaixo, mostra exemplos de TAGS ativas e passivas.
+É possível classificar as TAGs em três tipos, como pode ser visto na tabela \ref{tab:comparativoTags}: ativas, passivas e semi-passivas \cite{chawla2007overview}.  Existem vários tipos de TAGS ativas (alimentadas por baterias) e passivas, em várias faixas de frequência, presentes no mercado \cite{rao1999overview}. A Figura \ref{fig:tags-fundam}, logo abaixo, mostra exemplos de TAGS ativas e passivas.
 
-\textcolor{red}{fotos da tag ativa}
 
-\textcolor{red}{fotos da tag passiva}
 
-Segundo Rao \cite{rao1999overview}, TAGS ativas, como as apresentadas na Figura 1A, tem como vantagens o fornecimento de faixas de leituras maiores (explicar o porquê isso é interessante). Como desvantagem, elas podem ser bem mais caras por exigirem o uso de baterias \cite{rao1999overview}. Uma etiqueta RFID passiva, por sua vez, usará a energia das ondas de rádio do interrogador para retransmitir suas informações armazenadas de volta ao interrogador \cite{EPC-RFID-link}. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figs/Fundamentos/tags.png}
+    \caption{A) Exemplos de TAGs ativas \cite{wavetrend} - B) Exemplos de TAGs passivas \cite{IDTechEx} \cite{RFIDInsider}}
+    \label{fig:tags-fundam}
+\end{figure}
+
+
+
+
+
+Segundo Rao \cite{rao1999overview}, TAGs ativas, como as apresentadas na figura \ref{fig:tags-fundam}A, tem como vantagem o alcance de distância de leitura maior do que as TAGs passivas, devido à sua construção com alimentação de energia própria. Como desvantagem, elas podem ser bem mais caras e exigem o uso de baterias \cite{rao1999overview}. Uma etiqueta RFID passiva, figura \ref{fig:tags-fundam}B, por sua vez, usará a energia das ondas de rádio do interrogador para retransmitir suas informações armazenadas de volta a ele \cite{EPC-RFID-link}.
+
+As TAGs passivas podem possuir diversas construções de memória diferentes. O tipo mais simples é transpônder de 1-bit, muito utilizado em TAGs EAS (Artigo Eletrônico de segurança - \textit{Electronic Article Surveillance} em inglês). Ele possui um bit de memória apenas. O seu funcionamento é simples, a TAG responde ao interrogador um sinal de presença naquele ambiente, armazenando neste bit a informação de resposta, \textit{true} ou \textit{false}. \cite{book:klaus}
+
+Já os transpônderes de n-bits podem possuir de poucos bits até 128 kb a depender do sistema. Eles se dividem em \textit{full-duplex}, \textit{half-duplex} e sequenciais. A diferença entre eles é o protocolo de comunicação entre a TAG e o interrogador. \cite{book:klaus}
+
+\begin{itemize}
+    \item \textit{Half-duplex}
+    \begin{itemize}
+        \item O interrogador alimenta o transpônder continuamente
+        \item O interrogador e o transpônder se alternam para emitir dados de comunicação, com o transpônder utilizando frequências harmônicas para responder ao interrogador
+    \end{itemize}
+    \item \textit{Full-duplex}
+    \begin{itemize}
+        \item O interrogador alimenta o transpônder continuamente
+        \item O interrogador e o transpônder emitem dados de comunicação simultaneamente, com o transpônder utilizando frequências subarmônicas e anarmônicas para responder ao interrogador
+    \end{itemize}
+    \item Sequencial
+    \begin{itemize}
+        \item O interrogador alimenta o transpônder somente durante a sua etapa de transmissão de dados;
+        \item A transferência de dados do transpônder para a leitora ocorre somente durante curtos períodos de tempo, como uma resposta ao pulso de alimentação.
+    \end{itemize}
+\end{itemize}
 
 
 
@@ -177,7 +208,7 @@ Plástico & Dessintonização devido ao efeito dielétrico \\ \hline
          \item maior alcance que LF e HF
          \item usado para gerenciamento de estoque e armazéns
      \end{itemize}
-     \item Microondas
+     \item Micro-ondas
      \begin{itemize}
          \item Faixa de 2,44-5,80GHz para dispositivos RFID
          \item Alta velocidade de leitura
