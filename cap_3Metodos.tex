@@ -159,12 +159,9 @@ As leitoras da transição entre os ambientes Sala Principal (1) e Sala de Reuni
 
  \subsection{Elaboração do Software}
  
- A tecnologia RAIN RFID, geralmente utilizada para aplicações de \textit{IoT} (Internet das coisas - \textit{Internet of Things} em inglês), exige a implementação de um \textit{software} para conectar os dados das TAGs registrados pelas leitoras RFID às aplicações de alto nível e de computação em nuvem, como pode ser observado na figura \ref{fig:RFID-Middleware} do capítulo anterior, sessão \ref{section: RFID}.
+ A tecnologia RAIN RFID, geralmente utilizada para aplicações de \textit{IoT} (Internet das coisas - \textit{Internet of Things} em inglês), exige a implementação de um \textit{middleware} para conectar os dados crus das TAGs registrados pelas leitoras RFID às aplicações de alto nível e de computação em nuvem, como pode ser observado na figura \ref{fig:RFID-Middleware} do capítulo anterior, sessão \ref{section: middleware}. Por esse motivo, o pacote OctaneSDK da Impinj foi escolhido para implementar a aplicação de localização de pessoas. O pacote possui classes prontas de comunicação e configuração das leitoras Impinj Speedway R420 usadas. Será considerado, portanto, que o programa criado não se trata de um \textit{middleware}, mas de uma aplicação apenas, mesmo executando tarefas de comunicação com as leitoras.
  
- A estratégia utilizada foi baseada na estratégia
- 
-
- 
+ O \textit{software} elaborado simula internamente o ambiente do LARA como uma Rede de Petri, onde cada estado da rede representa um ambiente do LARA enquanto cada transição representa um par de antenas instaladas nas portas ou passagens. Os marcadores da Rede de Petri representam as TAGs das pessoas, transitando livremente pelos ambientes e transições. Um modelo que representa o funcionamento do programa pode ser visto na figura \ref{fig:Petri1}.
  
  \begin{figure}[H]
     \centering
@@ -173,6 +170,8 @@ As leitoras da transição entre os ambientes Sala Principal (1) e Sala de Reuni
     \label{fig:Petri1}
 \end{figure}
 
+Simulando a Rede de Petri é possível observar a ideia da circulação das pessoas pelo espaço do laboratório, onde cada transição ativada leva um marcador de um estado a outro, o que corresponde a uma pessoa cruzando uma fronteira para ir de um ambiente a outro. A figura \ref{fig:Petri2} mostra uma situação imaginária onde cinco pessoas transitam pelo laboratório. As transições marcadas em vermelho são as transições possíveis a partir do estado atual. A situação apresentada mostra duas pessoas na Sala Principal (1), duas pessoas na Sala de Reuniões (2) e uma pessoa no Corredor de Baias (3).
+
  \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/Petri_net2.png}
@@ -180,11 +179,50 @@ As leitoras da transição entre os ambientes Sala Principal (1) e Sala de Reuni
     \label{fig:Petri2}
 \end{figure}
  
+ O programa criado em linguagem de programação C\# é orientado a objeto e cria as seguintes classes:
  
+ \begin{itemize}
+     \item \textbf{Programa:} contém a função \textit{main} e as funções básicas de configuração, comunicação e leituras;
+     \item \textbf{Ambiente:} possui um nome, pode ter pessoas (\textit{cardholders}) e possui uma carga térmica associada à quantidade de pessoas em seu interior;
+     \item \textbf{Pessoa (\textit{Cardholder}):} possui um nome, uma TAG (o número EPC associado à TAG) e uma carga térmica. Guarda a informação do ambiente em que se encontra e das curvas de histórico de leituras de valores RSSI e frequência Doppler;
+     \item \textbf{Curva:} armazena os últimos $n$ valores de RSSI ou frequência Doppler, assim como o horário das leituras em que se capturaram essas informações;
+     \item \textbf{Antena:} possui um número e está associada a uma leitora;
+     \item \textbf{Transição:} conecta dois ambientes, e monitora duas antenas;
+     \item \textbf{Projeto:} implementa os critérios de decisão de transição e registra as mudanças de ambiente dos \textit{cardholders};
+     \item \textbf{Gerenciador de arquivos (\textit{FileHandler}):} Organiza e registra os dados coletados em arquivos CSV.
+ \end{itemize}
+ 
+ \subsection{Configuração das Leitoras}
+
+\textcolor{red}{TO BE CONTINUED} %TODO
+
+ \subsection{Transições}
+ 
+ Com o intuito de definir com a maior precisão possível o momento de passagem de uma pessoa de um ambiente para outro foi decidido monitorar as portas e passagens com duas antenas. O objetivo é acumular dados de potência de \textit{backscattering} das TAGs (RSSI) para possuir um valor comparativo de proximidade da TAG para cada antena. Além do sinal de potência RSSI, também é coletada a frequência de efeito Doppler, que indica um valor proporcional a velocidade vetorial em direção ortogonal à leitora, e pode indicar se a pessoa se aproxima ou de afasta desta.
+ 
+ Durante testes preliminares, o analisou-se a variação dos valores de RSSI e frequência Doppler com uma única TAG e uma única antena. Os resultados deste teste podem ser encontrados na seção \ref{sect:testepreliminar}. Com base nesses resultados duas conclusões foram tiradas: as leituras de frequência de efeito Doppler podem ser facilmente divididas entre aproximação e afastamento de uma determinada antena e as leituras de potência RSSI aumentam proporcionalmente com a proximidade da TAG à antena, e diminuem proporcionalmente ao afastamento.
+ 
+ A partir dessa ideia foi criado o conceito de transição, onde duas antenas registram a passagem de uma pessoa, e comparam entre si os dados RSSI e de frequência Doppler para estimar o sentido do caminhar da pessoa (entrando ou saindo de um ambiente). Cada antena fica de um lado da fronteira (porta ou passagem).
+ 
+ Definindo-se o maior valor de RSSI durante todas as leituras na passagem de uma pessoa por uma fronteira, define-se esse como o momento em que a pessoa está mais próxima daquela antena. Realiza-se o mesmo procedimento para a segunda antena, do outro lado da fronteira. O ponto médio define o momento de transição de um ambiente para o outro. Da mesma forma, o momento em que uma pessoa deixa de aproximar-se e passa a se afastar de uma antena, este é o momento em que a pessoa está mais próxima da antena. Utilizando o mesmo critério do RSSI, o ponto médio entre o cruzamento na frente das duas antenas marca o momento de transição.
+ 
+ \subsubsection{Curvas}
+ 
+ Foram criados dois \textit{buffers} para armazenar as últimas leituras de cada TAG. Cada um armazena uma lista ordenada de tuplas $<x,y>$, onde $x$ é o tempo da leitura, e $y$ é a magnitude. A lista é ordenada com base na chave $x$, para garantir que os dados são salvos em ordem cronológica. O primeiro \textit{buffer} armazena as leituras de RSSI. O segundo armazena as leituras de frequência Doppler.Os \textit{buffers} foram chamados de "curvas", por guardarem as curvas históricas das últimas $n$ leituras para cada valor.
+ 
+ O tamanho das curvas, inicialmente foi definido em 100 valores. Este se mostrou um valor demasiado grande, pois armazena dados de mais de uma passagem anterior, e atrapalha a análise dos dados. Definiu-se então que as curvas armazenariam 5 a 20 valores, padronizado em 12 leituras, por ser a faixa do tamanho médio da quantidade de leituras feitas em uma passagem a passos curtos em velocidade constante na frente das antenas.
+ 
+ Após encher o \textit{buffer}, cada próxima leitura será armazenada no final da lista, após a retirada do primeiro elemento, tornando o \textit{buffer} uma fila.
 
  
- 
- 
- 
  \subsection{Casos de teste}
+ \textcolor{red}{TO BE CONTINUED} %TODO
  
+ \subsubsection{Comparando a magnitude do último valor de RSSI capturado}
+ 
+ \subsubsection{Comparando o tempo e magnitude dos picos das curvas de RSSI}
+ 
+ \subsection{Comparando o tempo dos pontos de transição Doppler}
+ 
+ \subsection{Combinando o critério de picos RSSI e transições Doppler}
+
