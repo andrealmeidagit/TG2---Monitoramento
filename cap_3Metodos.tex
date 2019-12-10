@@ -121,7 +121,7 @@ A figura \ref{fig:TAGsused} a seguir mostra as TAGs utilizadas para monitorar o 
  
  As pessoas que transitam neste ambiente utilizam seus crachás em cordões dependurados no pescoço. Cada crachá permanece próximo ao corpo do seu usuário, porém não preso a ele. Os crachás ficam na altura do tórax.
  
- \subsection{O local}
+ \subsection{O local} \label{section:local}
  
 
  O Laboratório de Automação e Robótica (LARA) foi o local para simulação do ambiente de teste do sistema criado, especificamente, a metade sul do laboratório, onde se encontram os ambientes de estudo geral e a sala de reuniões.
@@ -130,7 +130,7 @@ A figura \ref{fig:TAGsused} a seguir mostra as TAGs utilizadas para monitorar o 
 
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\linewidth]{figs/Metodologia/LARA_planta_ambientes.png}
+    \includegraphics[width=0.7\linewidth]{figs/Metodologia/LARA_planta_ambientes.png}
     \caption{Imagem apresentando a planta baixa do LARA - local de instalação das leitoras}
     \label{fig:LARA_planta}
 \end{figure}
@@ -157,7 +157,7 @@ As antenas foram dispostas em locais estratégicos para se obter as leituras mai
 
 As leitoras da transição entre os ambientes Sala Principal (1) e Sala de Reuniões (2) e da transição entre os ambientes Sala Principal (1), Corredor de Baias (3) foram instaladas em posições opostas da sala para minimizar a ocorrência de leitura das \textit{tags} pelas duas leitoras ao mesmo tempo.
 
- \subsection{Elaboração do Software}
+ \subsection{Elaboração do Software} \label{section:software}
  
  A tecnologia RAIN RFID, geralmente utilizada para aplicações de \textit{IoT} (Internet das coisas - \textit{Internet of Things} em inglês), exige a implementação de um \textit{middleware} para conectar os dados crus das TAGs registrados pelas leitoras RFID às aplicações de alto nível e de computação em nuvem, como pode ser observado na figura \ref{fig:RFID-Middleware} do capítulo anterior, sessão \ref{section: middleware}. Por esse motivo, o pacote OctaneSDK da Impinj foi escolhido para implementar a aplicação de localização de pessoas. O pacote possui classes prontas de comunicação e configuração das leitoras Impinj Speedway R420 usadas. Será considerado, portanto, que o programa criado não se trata de um \textit{middleware}, mas de uma aplicação apenas, mesmo executando tarefas de comunicação com as leitoras.
  
@@ -194,12 +194,20 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
  
  \subsection{Configuração das Leitoras}
 
+  A correta configuração das leitoras é provavelmente a parte mais importante deste trabalho. O estudo cuidadoso de todos os modos de operação possíveis, observando o manual do fabricante \cite{SpeedwayRUserManual}, \textit{datasheet} das leitoras \cite{SpeedwayRDatasheet} e guias de programação e códigos de exemplo \cite{OctaneSDK} resultou na escolha dos parâmetros apresentados nesta sessão.
+  
+  Primeiramente, conecta-se à cada leitora. Para isso, é necessário informar o caminho de rede para realizar a conexão. As leitoras foram configuradas com IP (\textit{Internet Protocol}) fixo, em uma rede local fechada. O uso de uma rede local simplifica o comissionamento dos equipamentos e torna o sistema de localização de pessoas um pouco mais seguro, visto que RFID passivo é uma tecnologia muito suscetível a ataques à privacidade dos usuários e ataques destrutivos, como mostra Juels \textit{et al.} \cite{juels2006rfid}. Para acessar as leitoras, o nome padrão de domínio DNS (Sistema de Nomes de Domínio - em inglês \textit{Domain Name System}) foi utilizado para facilitar a identificação das leitoras. O domínio DNS padrão das leitoras é composto pelo modelo, seguido dos três últimos pares de dígitos do número de série de cada uma, que estão impressos em etiquetas coladas a cada uma.
+
+  A figura \ref{fig:set_readers} mostra a configuração dos caminhos de rede e a nomeação das leitoras. Através dos métodos \textit{"new"} e \textit{"Add"}, os objetos de cada leitora são criados e armazenados na classe \textit{"readers"}.
+
  \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/set_readers.PNG}
     \caption{Comandos de linha de código para estabelecer as leitoras}
     \label{fig:set_readers}
 \end{figure}
+
+ Em seguida, a primeira ação a ser executada é a criação do mapa da sala, com ambientes e transições, como discutido nas sessões \ref{section:local} e \ref{section:software}. Os ambientes criados são "Area\_Externa(0)", "Sala\_Principal(1)", "Sala\_Reuniao(2)" e "Corredor\_Baias(3)". As transições 1, 2 e 3 são criadas e associadas às respectivas leitoras e antenas, conforme montado fisicamente no laboratório. A implementação pode ser vista na figura \ref{fig:set_AmbTran}.
 
  \begin{figure}[H]
     \centering
@@ -208,12 +216,18 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
     \label{fig:set_AmbTran}
 \end{figure}
 
+  A principal função da leitora RFID é reportar as informações coletadas do campo. A figura \ref{fig:report_settings} mostra as configurações de \textit{report} feitas. As informações coletadas em cada leitura incluem: qual antena coletou a informação, o horário em que a TAG foi vista a primeira e a última vez (em cada \textit{report}), a quantidade de vezes que a TAG foi vista (em cada \textit{report}), a frequência Doppler e o pico de potência RSSI da leitura. 
+  
+  O modo de \textit{report} escolhido foi o modo individual, ou seja, a leitora envia um relatório a cada TAG lida. Isso inutiliza algumas funções nativas das leitoras, como os horários em que a TAG foi vista a primeira e a última vez e a quantidade de vezes que a TAG foi vista, mas possibilita a operação em tempo real (em um sentido mais amplo, não estritamente rígido), que é essencial para a aplicação criada neste trabalho.
+
  \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{figs/Metodologia/report_settings.PNG}
     \caption{Comandos de linha de código para configurar o modo de \textit{report} das leitoras}
     \label{fig:report_settings}
 \end{figure}
+
+ Após a configuração das leitoras, é necessário configurar as antenas (na realidade são as leitoras que são ajustadas nesta etapa, visto que as antenas são elementos passivos e fixos, mas os parâmetros alterados nesta parte são referentes ao funcionamento das antenas). Primeiramente são apagadas as configurações padrão e duas antenas são ativadas manualmente em cada leitora com potência máxima e sensitividade máxima. Existe a possibilidade de programar as leitoras para identificarem novas antenas automaticamente, todavia, para esta aplicação, onde a quantidade de antenas é fixa, não é necessário ativar essa função. O procedimento pode ser visto na figura \ref{fig:antenna_settings}.
 
  \begin{figure}[H]
     \centering
@@ -222,6 +236,8 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
     \label{fig:antenna_settings}
 \end{figure}
 
+  Finalmente, uma última função é ativada: o modo de leitura dos equipamentos é alterado para \textit{"DenseReaderM8"}. Este modo ativa parâmetros internos da leitora para prover a maior quantidade de leituras com a maior confiabilidade possível. Este modo é o equilíbrio entre leituras muito abundantes, mas muito ruidosas, e leituras escassas, mas confiáveis. Ao ativar esse modo, boa parte das leituras devido a reflexão e falsas leituras são filtradas em \textit{hardware}. O comando pode ser visto na figura \ref{fig:readermode_settings}.
+
  \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{figs/Metodologia/readermode_settings.PNG}
@@ -229,8 +245,7 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
     \label{fig:readermode_settings}
 \end{figure}
 
-
-\textcolor{red}{TO BE CONTINUED} %TODO
+  Após as configurações, as leitoras são iniciadas, uma \textit{tread} de leitura e uma de processamento de dados são abertas, e as configurações estão finalizadas.
 
  \subsection{Transições}
  
@@ -251,10 +266,18 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
  Após encher o \textit{buffer}, cada próxima leitura será armazenada no final da lista, após a retirada do primeiro elemento, tornando o \textit{buffer} uma fila.
 
  
- \subsection{Casos de teste}
+ \subsection{Estratégias e casos de teste}
+
+ Durante a fase de planejamento deste trabalho, inicialmente foi cogitado o uso de apenas uma leitora por transição, utilizando apenas as informações fornecidas pelas leitoras de potência de retorno do sinal das TAGs (RSSI) e frequência de efeito Doppler para definição da posição de uma TAG em um ambiente ou outro. Essa ideia foi promissora em um primeiro momento, e chegou a mostrar bons resultados, como pode ser visto na sessão \ref{sect:testepreliminar}. A identificação de um cruzamento de fronteira era feita corretamente na maioria das vezes, e as leituras geralmente produziam dados suficientes para a correta identificação da transição.
+ 
+ Entretanto, o problema com 
+ 
  \textcolor{red}{TO BE CONTINUED} %TODO
  
-  \begin{figure}[H]
+
+ \subsubsection{Comparando a magnitude do último valor de RSSI capturado}
+ 
+   \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/image001.png}
     \caption{Exemplo de curvas RSSI com dados gerados artificialmente}
@@ -267,26 +290,31 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
     \caption{Exemplo de curvas RSSI com dados gerados artificialmente}
     \label{fig:rssicurvesmet2}
 \end{figure}
-
-  \begin{figure}[H]
+ 
+ \subsubsection{Comparando o tempo e magnitude dos picos das curvas de RSSI}
+ 
+ \subsection{Comparando o tempo dos pontos de transição Doppler}
+ 
+   \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/image003.png}
     \caption{Exemplo de curvas Doppler com dados gerados artificialmente}
     \label{fig:doppler_MET}
 \end{figure}
-
- \begin{figure}[H]
+ 
+  \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/image007.png}
     \caption{Exemplo de curvas Doppler normalizado com dados gerados artificialmente}
     \label{fig:Doppler_norm_MET}
 \end{figure}
  
- \subsubsection{Comparando a magnitude do último valor de RSSI capturado}
- 
- \subsubsection{Comparando o tempo e magnitude dos picos das curvas de RSSI}
- 
- \subsection{Comparando o tempo dos pontos de transição Doppler}
- 
  \subsection{Combinando o critério de picos RSSI e transições Doppler}
+ 
+   \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figs/Metodologia/image009.png}
+    \caption{Comparativo das curvas RSSI e Doppler Normalizado}
+    \label{fig:RSSI_Doppler_norm_MET}
+\end{figure}
 

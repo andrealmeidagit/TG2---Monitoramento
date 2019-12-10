@@ -142,10 +142,9 @@ Já os transpônderes de n-bits podem possuir de poucos bits até 128 kb a depen
 
 \subsection{Antenas}
 
-A antena é capaz de perceber o sinal de uma TAG dentro de um determinado raio de cobertura. Cada antena é única nesse sentido...
+A antena é o equipamento de um sistema RFID capaz de perceber o sinal de uma TAG dentro de um determinado raio de cobertura. Elas se conectam às leitoras e são responsáveis por propagar os sinais enviados pela leitora no meio, energizar as etiquetas e escutar o sinal de resposta.
 
-\textcolor{red}{TO BE CONTINUED} %TODO
-
+Antenas são dispositivos usados na transferência e captação de ondas eletromagnéticas em meios ilimitados no espaço. São projetadas em bandas de frequência de operação. Dessa forma, um sinal ou é atenuado ou é rejeitado por completo. \cite{antena}
 
 \subsection{Efeitos causados por materiais e frequência de operação}
 
@@ -331,9 +330,10 @@ A localização de pessoas e objetos já está muito avançada para ambientes ex
 
 Para desviar dos empecilho, soluções específicas para diversas aplicações são criadas. A indústria larga na frente, com sistemas de rastreio e posicionamento de produtos e equipamentos, como em armazéns e linhas de produção. O comércio também já possui soluções para prevenção de perdas e roubos, e começa a aplicar os conceitos de rastreamento de produtos de armazéns para identificar roupas e sapatos em estantes, por exemplo. A área de soluções para cidades pesquisa tecnologias IoT.
 
-A área de localização de pessoas possui \textcolor{red}{TO BE CONTINUED} %TODO
+A área de localização de pessoas em ambientes fechados possui pesquisas com diversas tecnologias, como WiFi, Bluetooth, GSM, Radiação Infravermelha, processamento de imagens, RFID ativo e passivo, entre outras. Todas possuem vantagens e desvantagens.
 
-\subsection{Estratégias}
+A grande diferença entre as técnicas de rastreamento do RFID ativo e passivo é que, geralmente, as propostas com RFID ativo utilizam algum tipo de triangulação de sinais, com um transpônder e diversas leitoras \cite{bouet2008rfid} \cite{jin2006indoor} \cite{sanpechuda2008review}, devido às características de funcionamento desse sistema. As estratégias com RFID passivo costumam necessitar de pontos de interrogação e controle de acesso para funcionar, devido ao curto alcance da maioria dos sistemas. Entretanto, algumas aplicações funcionais de localização cartesiana recentes utilizando frequências mais altas como UHF e Microondas \cite{xarray} mostram que é possível minimizar as dificuldades de implementar sistemas de localização com RFID passivo.
 
-\textcolor{red}{TO BE CONTINUED} %TODO
+Algumas implementações, como a de Tesoriero \textit{et al.} \cite{tesoriero2008using}, inovam ao misturar sensores ativos e passivos. Sua pesquisa apresenta o ambiente de um museu, onde os visitantes carregam PDAs (Assistentes Pessoais Digitais - em inglês \textit{Personal Digital Assistants} que são leitoras RFID passivo, e as TAGs marcam os locais e as obras, invertendo o papel padrão dos elementos, e criando um mapa do museu a partir do posicionamento das TAGs.
 
+Utilizando os recursos disponíveis na UnB e no LARA, este trabalho propõe uma solução própria, que será explanada na sessão \ref{chap:Metodos}.
