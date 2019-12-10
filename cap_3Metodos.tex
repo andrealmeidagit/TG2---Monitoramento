@@ -257,7 +257,7 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
  
  Definindo-se o maior valor de RSSI durante todas as leituras na passagem de uma pessoa por uma fronteira, define-se esse como o momento em que a pessoa está mais próxima daquela antena. Realiza-se o mesmo procedimento para a segunda antena, do outro lado da fronteira. O ponto médio define o momento de transição de um ambiente para o outro. Da mesma forma, o momento em que uma pessoa deixa de aproximar-se e passa a se afastar de uma antena, este é o momento em que a pessoa está mais próxima da antena. Utilizando o mesmo critério do RSSI, o ponto médio entre o cruzamento na frente das duas antenas marca o momento de transição.
  
- \subsubsection{Curvas}
+ \subsubsection{Curvas} \label{section:curvas}
  
  Foram criados dois \textit{buffers} para armazenar as últimas leituras de cada TAG. Cada um armazena uma lista ordenada de tuplas $<x,y>$, onde $x$ é o tempo da leitura, e $y$ é a magnitude. A lista é ordenada com base na chave $x$, para garantir que os dados são salvos em ordem cronológica. O primeiro \textit{buffer} armazena as leituras de RSSI. O segundo armazena as leituras de frequência Doppler.Os \textit{buffers} foram chamados de "curvas", por guardarem as curvas históricas das últimas $n$ leituras para cada valor.
  
@@ -266,24 +266,54 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
  Após encher o \textit{buffer}, cada próxima leitura será armazenada no final da lista, após a retirada do primeiro elemento, tornando o \textit{buffer} uma fila.
 
  
- \subsection{Estratégias e casos de teste}
+ \subsection{Estratégias e casos de teste} \label{section:estrategias}
 
  Durante a fase de planejamento deste trabalho, inicialmente foi cogitado o uso de apenas uma leitora por transição, utilizando apenas as informações fornecidas pelas leitoras de potência de retorno do sinal das TAGs (RSSI) e frequência de efeito Doppler para definição da posição de uma TAG em um ambiente ou outro. Essa ideia foi promissora em um primeiro momento, e chegou a mostrar bons resultados, como pode ser visto na sessão \ref{sect:testepreliminar}. A identificação de um cruzamento de fronteira era feita corretamente na maioria das vezes, e as leituras geralmente produziam dados suficientes para a correta identificação da transição.
  
- Entretanto, o problema com 
+ Entretanto, o problema com esta estratégia é que no momento em que adicionam-se ambientes vizinhos, com outras leitoras e outras antenas próximas, pessoas circulando e uma quantidade maior de TAGs, começam a surgir leituras erradas nas zonas de transição. Por exemplo: No ambiente do LARA, ao realizar o monitoramento com apenas uma antena na transição entre a Sala Principal (1) e a Sala de Reuniões (2), e uma antena na transição entre a Sala Principal (1) e o Corredor de Baias (3), no momento em que se passa por uma, leituras também são captadas pela outra. Devido aos caminhos múltiplos que os sinais RF podem tomar em um ambiente fechado devido à reflexão (do chão, teto, paredes e objetos próximos, como mesas, cadeiras, hastes de metal, equipamentos, etc.), a leitura de potência RSSI pode ser enganosa e mostrar a transição em um ambiente, quando na verdade se encontra em outro. Além disso, ao ficar próximo de uma divisória, como a parede da Sala de Reuniões (2), em alguns casos, sinais podem ser captados em antenas de fora da sala, enganando o programa e registrando uma troca de sala para outro ambiente.
  
- \textcolor{red}{TO BE CONTINUED} %TODO
+ Por esse motivo, uma topologia similar à usada em sistemas de gerenciamento de estoque, usada em controle de carga e descarga de caminhões, assim como entrada e saída de itens em estoque \cite{PortalRFID}. Disponibilizando duas antenas para cada transição, é possível obter informações mais confiáveis de leitura, e ainda possui a vantagem de saber o sentido da travessia. Dessa forma, diminui-se o risco de registrar a entrada ou saída de uma pessoa em um ambiente apenas por registrar leituras de proximidade a uma antena. As antenas foram posicionadas de maneira similar à observada na figura \ref{fig:antenas1}. Esta foto, apesar de não ser o local final, permite a visualização da orientação e espaçamento das antenas para registrar a travessia de uma pessoa em sua frente.
  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{figs/Metodologia/antenas1.jpeg}
+    \caption{Montagem das antenas em local provisório. É possível visualizar a orientação e distanciamento das antenas.}
+    \label{fig:antenas1}
+\end{figure}
+ 
+ Foram elaboradas duas ideias principais, que foram estendidas para seis, ao final do estudo. As duas principais são discutidas nas sessões \ref{section:picos_met} e \ref{section:doppler_met}, e as demais (sessões \ref{section:ultimo_valor_met}, \ref{section:RSSI+doppler_met}, \ref{section:mean_met} e \ref{section:median_met}) são derivadas das suas primeiras.
 
- \subsubsection{Comparando a magnitude do último valor de RSSI capturado}
+ \subsubsection{Comparando a magnitude do último valor de RSSI capturado} \label{section:ultimo_valor_met}
  
-   \begin{figure}[H]
+ Iniciando pela ideia mais simples: compara-se as últimas leituras em ambas as antenas. O princípio é utilizar a informação de potência do sinal de retorno das TAGs para a leitora, o sinal RSSI, como indicador de proximidade de uma antena. Quanto mais próximo uma TAG está de uma antena, maior é o sinal RSSI registrado. Quanto mais distante uma TAG está da antena, menor é o sinal. Testes com as TAGs utilizadas no projeto mostraram que, quando estão rentes às antenas, encostando nelas, o sinal RSSI registrado chega a ser maior que $-30dB$. Ao afastar a TAG da antena, com a face da etiqueta apontando para ela, na orientação mais favorável à leitura pela antena (devido à polarização do sinal), o sinal mais fraco registrado foi ligeiramente menor que $-70dB$. O fabricante indica que as antenas são capazes de registrar até $-90dB$ de sinal de retorno RSSI, mas com as TAGs utilizadas e em um ambiente poluído para aplicações de RF uma leitura tão fraca não existiu.
+ 
+ Considerando que uma pessoa passe em frente às leitoras da foto \ref{fig:antenas1} da direita para a esquerda, ou da esquerda para a direita, comparando-se o valor da magnitude da última leitura RSSI, em teoria, o valor lido pela antena mais próxima será sempre o mais forte. Como as duas antenas estão próximas, durante a maioria das leituras as duas antenas enxergarão a TAG a sua frente.
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figs/Metodologia/maisproxima.PNG}
+    \caption{Esquemático das distâncias das TAGs às antenas (adaptado de Bekkali \cite{bekkali2007rfid}}
+    \label{fig:maisproxima}
+\end{figure}
+ 
+  A figura \ref{fig:maisproxima} mostra duas posições $P$ e $T$, que representam duas posições possíveis para uma TAG em frente às antenas $R_1$ e $R_2$. Como a distância de $P$ para $R_2$ é maior que de $P$ para $R_1$, o sinal RSSI será mais forte em $R_1$. Já $T$ está mais próximo de $R_2$, e portanto o seu sinal RSSI será mais forte em $R_2$ do que em $R_1$.
+
+ \subsubsection{Comparando o tempo dos últimos picos das curvas de RSSI} \label{section:picos_met}
+ 
+ Aprimorando a ideia da sessão \ref{section:ultimo_valor_met}, caso o valor das últimas leituras das antenas seja armazenado, mais informações podem ser obtidas do que apenas a proximidade instantânea das antenas.
+ 
+ Criando curvas que armazenam esses valores, como discutido na sessão \ref{section:curvas}, é possível analisar toda a trajetória da pessoa em frente às antenas. Utilizando as curvas fictícias das figuras \ref{fig:rssicurvesmet1} e \ref{fig:rssicurvesmet2}, é possível explicar a ideia da comparação de picos.
+ 
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/image001.png}
     \caption{Exemplo de curvas RSSI com dados gerados artificialmente}
     \label{fig:rssicurvesmet1}
 \end{figure}
 
+
+ Supondo que uma pessoa portando uma etiqueta RFID em seu crachá caminhe em frente às leitoras da figura \ref{fig:antenas1}. Definimos a antena da esquerda como a antena $y_1$, e a antena da direita como $y_2$. Ao caminhar da esquerda para a direita, a pessoa passa primeiramente em frente à antena $y_1$, e em seguida passa em frente à antena $y_2$. A cada período de tempo $x$ - onde nesse caso teórico não atribuímos um valor de tempo definido para $x$ a fim de facilitar o entendimento, apenas números inteiros de 1 a 12 - registra-se o valor de potência RSSI para a mesma TAG nas duas antenas nas curvas da figura \ref{fig:rssicurvesmet1}, $y_1$ em azul e $y_2$ em laranja. Os tempos $x$ de 1 a 12 mostram a progressão no tempo.
+ 
  \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/image005.png}
@@ -291,9 +321,34 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
     \label{fig:rssicurvesmet2}
 \end{figure}
  
- \subsubsection{Comparando o tempo e magnitude dos picos das curvas de RSSI}
+ É possível perceber que entre os tempos $x=5$ e $x=7$ existe a maior probabilidade de a pessoa estar em frente à antena $y_1$, pois esse trecho apresenta os valores máximos de RSSI para essa antena. Entre os períodos $x=8$ e $x=10$ existe a maior probabilidade de a pessoa estar em frente à antena $y_2$, pois esse trecho apresenta os valores máximos de RSSI para essa antena. Já as curvas da figura \ref{fig:rssicurvesmet2} mostram o oposto: entre os períodos $x=2$ e $x=4$ a pessoa provavelmente passa em frente à antena $y_2$ e de $x=5$ a $x=7$ em frente à antena $y_1$.
  
- \subsection{Comparando o tempo dos pontos de transição Doppler}
+ A partir dessa informação, conclui-se que na situação da figura \ref{fig:rssicurvesmet1} a pessoa caminha da direita para a esquerda, em frente às leitoras. Já na figura \ref{fig:rssicurvesmet2}, a pessoa caminha da esquerda para a direita. O intervalo entre o pico das duas curvas é o trecho entre as duas antenas. Define-se o ponto médio entre os dois picos como o ponto de cruzamento.
+ 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figs/Metodologia/curvas1.png}
+    \caption{Exemplo de curvas RSSI com dados gerados artificialmente}
+    \label{fig:rssicurvesmet3}
+\end{figure}
+
+Um caso mais complicado onde a pessoa volta para o caminho de onde veio é mostrado na figura \ref{fig:rssicurvesmet3}, também gerada com dados artificiais. Neste caso, dois picos são criados na curva azul, da antena $y_1$. Para tratar este tipo de imprevisto, o método da comparação dos tempos de pico também é robusto. Comparando os picos mais recentes, apenas, o critério de decisão enxergará um pico de potência RSSI de $y_2$ em $x=6$ e um pico de potência RSSI de $y_1$ em $x=10$, definindo o ambiente onde a pessoa está como o lado da antena $y_1$, ou seja, no lado correto.
+ 
+\subsection{Comparando a média das curvas de potência RSSI} \label{section:mean_met}
+
+ Dado que se possui um \textit{buffer} repleto dos últimos dados de potência RSSI, obtidos pelas curvas armazenadas, considera-se a ideia de que a média desses valores possa indicar o lado da antena mais próxima. Estima-se que as últimas coletas de valores de RSSI na antena mais próxima, maiores que os da antena adjacente, possam fornecer bons indicadores de qual ambiente a pessoa ocupa.
+
+
+
+\subsection{Combinando a mediana das curvas de potência RSSI} \label{section:median_met}
+ 
+ Da mesma forma, aproveitando os dados das curvas, estima-se que a mediana dos dados seja maior do lado onde os últimos registros de leitura de TAG sejam feitos.
+
+ 
+
+ \subsection{Utilizando o Efeito Doppler como critério de travessia} \label{section:doppler_met}
+ 
+  O outro dado relevante para utilização como critério de rastreamento de pessoas é a frequência Doppler. Os dados fornecidos pelas leitoras indicam um número proporcional à componente de velocidade vetorial ortogonal à antena, como visto na sessão \ref{section:doppler_fund}. A figura \ref{fig:doppler_MET} mostra dados gerados artificialmente de frequência Doppler simulando uma pessoa caminhando em velocidade constante em frente às antenas.
  
    \begin{figure}[H]
     \centering
@@ -301,6 +356,15 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
     \caption{Exemplo de curvas Doppler com dados gerados artificialmente}
     \label{fig:doppler_MET}
 \end{figure}
+
+    Os dados fornecidos pela leitora, geralmente ficam na faixa entre $\pm 10 Hz$. Valores maiores que zero indicam aproximação enquanto valores menores que zero indicam afastamento. Utilizando a equação \ref{eq:dopplerNorm} é possível normalizar os dados entre $1$ e $-1$, criando um sinal binário (positivo ou negativo). A normalização dá origem à figura \ref{fig:Doppler_norm_MET}.
+    
+    \begin{equation}
+        y_i = \frac{y_i}{|y_i|} \ \ \ \ \ \ \ \ \ \ ; i = 0, 1, 2, 3 ...
+        \label{eq:dopplerNorm}
+    \end{equation}
+
+A figura \ref{fig:Doppler_norm_MET} pode ser facilmente analisada pois com as curvas normalizadas, busca-se apenas as transições de positivo para negativo. Estas indicam que a pessoa deixou de aproximar-se e passou a se afastar da antena.
  
   \begin{figure}[H]
     \centering
@@ -308,13 +372,18 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
     \caption{Exemplo de curvas Doppler normalizado com dados gerados artificialmente}
     \label{fig:Doppler_norm_MET}
 \end{figure}
+
+Usando as transições das curvas normalizadas, procura-se por transições positivo$\rightarrow$negativo consecutivas, pois a mais recente provavelmente indica o sentido em que a pessoa caminha. Por exemplo, a figura \ref{fig:Doppler_norm_MET} possui a transição de $y_2$ em $x=4$ e a de $y_1$ em $x=7$, o que indicaria que a pessoa entrou no ambiente definido pela antena $y_1$.
  
- \subsection{Combinando o critério de picos RSSI e transições Doppler}
+ \subsection{Combinando a travessia por comparação de tempo de pico RSSI com o Efeito Doppler} \label{section:RSSI+doppler_met}
  
+O último caso estudado combina a comparação dos tempos de picos de potência de sinal RSSI e a comparação das transições positivo$\rightarrow$negativo da frequência Doppler para confirmar com mais exatidão a existência de um cruzamento de fronteira. A figura \ref{fig:RSSI_Doppler_norm_MET} combina as figuras \ref{fig:rssicurvesmet1} e \ref{fig:Doppler_norm_MET} em uma.
+
    \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/image009.png}
-    \caption{Comparativo das curvas RSSI e Doppler Normalizado}
+    \caption{Comparativo das curvas RSSI e Doppler Normalizado com dados gerados artificialmente}
     \label{fig:RSSI_Doppler_norm_MET}
 \end{figure}
 
+Na figura \ref{fig:RSSI_Doppler_norm_MET} observa-se que o pico $RSSI_1$ no instante $x=6$ ocorre ao mesmo tempo que a última leitura positiva de frequência Doppler $\frac{FD_1}{|FD_1|}$, e o pico $RSSI_2$ no instante $x=3$ ocorre ao mesmo tempo que a última leitura positiva de frequência Doppler $\frac{FD_2}{|FD_2|}$. Valores de pico de potência de sinal de resposta da TAG e transições de efeito Doppler acontecendo em momentos de tempo próximos indicam boa confiabilidade da sugestão de cruzamento de fronteira.
