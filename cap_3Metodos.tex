@@ -108,7 +108,7 @@ A figura \ref{fig:TAGsused} a seguir mostra as TAGs utilizadas para monitorar o 
  A linguagem de programação mais recomendada para desenvolvimento usando OctaneSDK com o Visual Studio é C\#. O desenvolvimento em outras linguagens baseadas em .NET \textit{framework} é possível, mas sem suporte da Impinj.
 
  
- \section{Abordagem utilizada}
+ \section{Abordagem utilizada} \label{abordagem}
  
  Três pontos foram essenciais para a execução deste trabalho: a implementação física das leitoras, antenas e demais equipamentos no local de teste; o \textit{software} de detecção de pessoas e cruzamento de fronteiras para a contagem de pessoas em um determinado ambiente;  e a elaboração de casos de teste para  validação da abordagem. Estes pontos serão descritos nas seções a seguir.
  
@@ -334,19 +334,19 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
 
 Um caso mais complicado onde a pessoa volta para o caminho de onde veio é mostrado na figura \ref{fig:rssicurvesmet3}, também gerada com dados artificiais. Neste caso, dois picos são criados na curva azul, da antena $y_1$. Para tratar este tipo de imprevisto, o método da comparação dos tempos de pico também é robusto. Comparando os picos mais recentes, apenas, o critério de decisão enxergará um pico de potência RSSI de $y_2$ em $x=6$ e um pico de potência RSSI de $y_1$ em $x=10$, definindo o ambiente onde a pessoa está como o lado da antena $y_1$, ou seja, no lado correto.
  
-\subsection{Comparando a média das curvas de potência RSSI} \label{section:mean_met}
+\subsubsection{Comparando a média das curvas de potência RSSI} \label{section:mean_met}
 
  Dado que se possui um \textit{buffer} repleto dos últimos dados de potência RSSI, obtidos pelas curvas armazenadas, considera-se a ideia de que a média desses valores possa indicar o lado da antena mais próxima. Estima-se que as últimas coletas de valores de RSSI na antena mais próxima, maiores que os da antena adjacente, possam fornecer bons indicadores de qual ambiente a pessoa ocupa.
 
 
 
-\subsection{Combinando a mediana das curvas de potência RSSI} \label{section:median_met}
+\subsubsection{Combinando a mediana das curvas de potência RSSI} \label{section:median_met}
  
  Da mesma forma, aproveitando os dados das curvas, estima-se que a mediana dos dados seja maior do lado onde os últimos registros de leitura de TAG sejam feitos.
 
  
 
- \subsection{Utilizando o Efeito Doppler como critério de travessia} \label{section:doppler_met}
+ \subsubsection{Utilizando o Efeito Doppler como critério de travessia} \label{section:doppler_met}
  
   O outro dado relevante para utilização como critério de rastreamento de pessoas é a frequência Doppler. Os dados fornecidos pelas leitoras indicam um número proporcional à componente de velocidade vetorial ortogonal à antena, como visto na sessão \ref{section:doppler_fund}. A figura \ref{fig:doppler_MET} mostra dados gerados artificialmente de frequência Doppler simulando uma pessoa caminhando em velocidade constante em frente às antenas.
  
@@ -375,7 +375,7 @@ A figura \ref{fig:Doppler_norm_MET} pode ser facilmente analisada pois com as cu
 
 Usando as transições das curvas normalizadas, procura-se por transições positivo$\rightarrow$negativo consecutivas, pois a mais recente provavelmente indica o sentido em que a pessoa caminha. Por exemplo, a figura \ref{fig:Doppler_norm_MET} possui a transição de $y_2$ em $x=4$ e a de $y_1$ em $x=7$, o que indicaria que a pessoa entrou no ambiente definido pela antena $y_1$.
  
- \subsection{Combinando a travessia por comparação de tempo de pico RSSI com o Efeito Doppler} \label{section:RSSI+doppler_met}
+ \subsubsection{Combinando a travessia por comparação de tempo de pico RSSI com o Efeito Doppler} \label{section:RSSI+doppler_met}
  
 O último caso estudado combina a comparação dos tempos de picos de potência de sinal RSSI e a comparação das transições positivo$\rightarrow$negativo da frequência Doppler para confirmar com mais exatidão a existência de um cruzamento de fronteira. A figura \ref{fig:RSSI_Doppler_norm_MET} combina as figuras \ref{fig:rssicurvesmet1} e \ref{fig:Doppler_norm_MET} em uma.
 
