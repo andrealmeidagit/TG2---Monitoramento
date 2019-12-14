@@ -347,3 +347,26 @@ A grande diferença entre as técnicas de rastreamento do RFID ativo e passivo �
 Algumas implementações, como a de Tesoriero \textit{et al.} \cite{tesoriero2008using}, inovam ao misturar sensores ativos e passivos. Sua pesquisa apresenta o ambiente de um museu, onde os visitantes carregam PDAs (Assistentes Pessoais Digitais - em inglês \textit{Personal Digital Assistants} que são leitoras RFID passivo, e as TAGs marcam os locais e as obras, invertendo o papel padrão dos elementos, e criando um mapa do museu a partir do posicionamento das TAGs.
 
 Utilizando os recursos disponíveis na UnB e no LARA, este trabalho propõe uma solução própria, que será explanada no capítulo \ref{chap:Metodos} - Metodologia.
+
+
+
+\section{Cálculo de taxa de amostragem}
+
+A fabricante das leitoras relata a relação do modo de leitura definido na figura \ref{fig:readermode_settings} com a frequência de identificação dos cartões. Segundo a Impinj \cite{reader_mode}, o modo \textit{"DenseReaderM8"} leva oito ciclos para processar cada bit de leitura, como pode ser visto na figura \ref{fig:modulation}. Considerando que a leitora funcione à taxa de 900MHz, arredondando os valores reais de frequência de operação, realizam-se os cálculos da equação \ref{eq:taxadeamostragem} para calcular o menor tempo possível de período de leitura.
+
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figs/Metodologia/modulation.png}
+    \caption{Modulação de modos de leitura \cite{reader_mode}}
+    \label{fig:modulation}
+\end{figure}
+
+\begin{equation}
+    T_A = \frac{1}{f_{op}}*M*B*C
+    \label{eq:taxadeamostragem}
+\end{equation}
+
+Na equação \ref{eq:taxadeamostragem}, a variável $T_A$ representa o período de amostragem mínimo, $f_{op}$ é a frequência de operação, $M$ é o modo de leitura (quantos ciclos por bit são necessários), $M$ é o número de Miller \cite{reader_mode}, que registra o numero de ciclos por Bit lido, $B$ é o número de Bits total do chip da TAG e $C$ é uma constante que relaciona o atraso na leitura provocada por existirem múltiplas TAGs no campo de cobertura da antena. Realizando os cálculos para o caso específico deste trabalho, obtém-se o valor calculado na equação \ref{eq:amostragem2}.
+
+Os valores de taxa de amostragem serão calculados na seção \ref{section:amostragem}.
+

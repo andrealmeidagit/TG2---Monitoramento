@@ -13,6 +13,7 @@
 \usepackage{float}
 \usepackage{tabto}
 
+
 \makeatletter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
@@ -53,6 +54,7 @@
 \usepackage{graphicx}
 \usepackage{import}
 \usepackage[table]{xcolor}
+\usepackage{pdfpages}
 
 % Escolher um dos seguintes formatos:
 \usepackage{ft2unb} % segue padrão de fontes do Latex
@@ -333,7 +335,13 @@ Anexo II: Programas Utilizados
 \refstepcounter{noAnexo}
 
 \begin{comment}
-Acrescente mais anexos conforme julgar necessário.
+Anexo III: Dados do teste
 \end{comment}
+
+\include{anexo_TestLog}
+\refstepcounter{noAnexo}
+
+ \includepdf[page=-, pagecommand={}]{log_20191210_02-32-32}
+
 
 \end{document}

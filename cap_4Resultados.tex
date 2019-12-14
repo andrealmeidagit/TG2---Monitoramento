@@ -25,13 +25,11 @@ Durante testes preliminares, analisou-se a variação dos valores de RSSI e freq
 
 \section{Teste do programa implementado}
 
-O \textit{software} criado para este trabalho segue a metodologia e as estratégias mencionadas na sessão \ref{section:estrategias}. O programa foi desenvolvido de tal forma que, ao mesmo tempo, é possível realizar todos os seis casos de teste. Para isso, a classe \textit{cardholder} possui sete variáveis para armazenar ambientes: uma para o ambiente real - indicado manualmente no terminal do programa quando executado em modo \textit{debug}, para uma pessoa específica apenas - e seis para as suposições de ambiente atual de cada caso de teste.
+O \textit{software} criado para este trabalho segue a metodologia e as estratégias mencionadas na seção \ref{section:estrategias}. O programa foi desenvolvido de tal forma que, ao mesmo tempo, é possível realizar todos os seis casos de teste. Para isso, a classe \textit{cardholder} possui sete variáveis para armazenar ambientes: uma para o ambiente real - indicado manualmente no terminal do programa quando executado em modo \textit{debug}, para uma pessoa específica apenas - e seis para as suposições de ambiente atual de cada caso de teste.
 
-Três testes foram executados e, durante a execução, o programa armazenou, em tempo real, os dados relevantes de cada leitura de TAG (nome do portador da TAG, número EPC, nome da leitora, número da antena que capturou a leitura, data, horário da captura das informações, ambiente atual, curva de valores de potência RSSI, curva de frequência Doppler e as seis hipóteses de ambiente atual geradas pelos casos de teste). Estes dados podem ser vistos nos apêndices \ref{apendix:1}, \ref{apendix:2} e \ref{apendix:3}.
+Um teste foi executado e, durante a execução, o programa armazenou, em tempo real, os dados relevantes de cada leitura de TAG (nome do portador da TAG, número EPC, nome da leitora, número da antena que capturou a leitura, data, horário da captura das informações, ambiente atual, curva de valores de potência RSSI, curva de frequência Doppler e as seis hipóteses de ambiente atual geradas pelos casos de teste). Estes dados podem ser vistos no apêndice \ref{apendix:1}.
 
-Durante a execução do primeiro teste, uma pessoa transitou pelo ambiente do LARA, enquanto outra registrava manualmente os valores de ambiente real (apêndice \ref{apendix:1}). Durante a execução dos dois testes seguintes (apêndices \ref{apendix:2} e \ref{apendix:3}), uma pessoa percorreu o LARA enquanto outra filmou o percurso para validação dos dados, comparando os tempos no vídeo e os registros de \textit{log} do programa.
-
-Durante a execução do primeiro e do terceiro testes (apêndices \ref{apendix:1} e \ref{apendix:3}) caminhou-se a velocidade constante em frente às leitoras. O segundo teste (apêndice \ref{apendix:2}) envolveu mudanças bruscas de direção no momento do cruzamento das fronteiras.
+Durante a execução do teste, uma pessoa transitou pelo ambiente do LARA, enquanto outra registrava manualmente os valores de ambiente real (apêndice \ref{apendix:1}).
 
 As figuras \ref{fig:cruzamento01}, \ref{fig:cruzamento10}, \ref{fig:cruzamento12}, \ref{fig:cruzamento21}, \ref{fig:cruzamento13} e \ref{fig:cruzamento31} mostram imagens dos vídeos gravados, durante os cruzamentos de fronteira entre ambientes, em frente às leitoras e às antenas.
 
@@ -119,7 +117,7 @@ Confiabilidade analítica & $80\%$ \\ \hline
 \end{tabular}
 \end{table}
 
-Os itens de erro e confiabilidade desta tabela são os mesmos do caso de teste de último valor, sessão \ref{section:ultimovalorRES}, já que foram executados no mesmo teste. Foram 129 leituras e 10 transições de ambiente.
+Os itens de erro e confiabilidade desta tabela são os mesmos do caso de teste de último valor, seção \ref{section:ultimovalorRES}, já que foram executados no mesmo teste. Foram 129 leituras e 10 transições de ambiente.
 
 
 \subsection{Comparação da média dos valores de RSSI}
@@ -140,7 +138,7 @@ Confiabilidade analítica & $10\%$ \\ \hline
 \end{tabular}
 \end{table}
 
-Os itens de erro e confiabilidade desta tabela são os mesmos do caso de teste de último valor, sessão \ref{section:ultimovalorRES}, já que foram executados no mesmo teste. Foram 129 leituras e 10 transições de ambiente.
+Os itens de erro e confiabilidade desta tabela são os mesmos do caso de teste de último valor, seção \ref{section:ultimovalorRES}, já que foram executados no mesmo teste. Foram 129 leituras e 10 transições de ambiente.
 
 \subsection{Comparação da mediana dos sinais RSSI}
 
@@ -160,7 +158,7 @@ Confiabilidade analítica & $60\%$ \\ \hline
 \end{tabular}
 \end{table}
 
-Os itens de erro e confiabilidade desta tabela são os mesmos do caso de teste de último valor, sessão \ref{section:ultimovalorRES}, já que foram executados no mesmo teste. Foram 129 leituras e 10 transições de ambiente.
+Os itens de erro e confiabilidade desta tabela são os mesmos do caso de teste de último valor, seção \ref{section:ultimovalorRES}, já que foram executados no mesmo teste. Foram 129 leituras e 10 transições de ambiente.
 
 \subsection{Comparação da travessia por Efeito Doppler}
 
@@ -181,7 +179,7 @@ Confiabilidade analítica & $60\%$ \\ \hline
 \end{tabular}
 \end{table}
 
-Os itens de erro e confiabilidade desta tabela são os mesmos do caso de teste de último valor, sessão \ref{section:ultimovalorRES}, já que foram executados no mesmo teste. Foram 129 leituras e 10 transições de ambiente.
+Os itens de erro e confiabilidade desta tabela são os mesmos do caso de teste de último valor, seção \ref{section:ultimovalorRES}, já que foram executados no mesmo teste. Foram 129 leituras e 10 transições de ambiente.
 
 \subsection{Combinação da técnica de picos de RSSI com Efeito Doppler}
 
@@ -201,4 +199,4 @@ Confiabilidade analítica & $50\%$ \\ \hline
 \end{tabular}
 \end{table}
 
-Os itens de erro e confiabilidade desta tabela são os mesmos do caso de teste de último valor, sessão \ref{section:ultimovalorRES}, já que foram executados no mesmo teste. Foram 129 leituras e 10 transições de ambiente.
+Os itens de erro e confiabilidade desta tabela são os mesmos do caso de teste de último valor, seção \ref{section:ultimovalorRES}, já que foram executados no mesmo teste. Foram 129 leituras e 10 transições de ambiente.

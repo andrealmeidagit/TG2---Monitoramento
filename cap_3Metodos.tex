@@ -174,11 +174,11 @@ As leitoras da transição entre os ambientes Sala Principal (1) e Sala de Reuni
 
  \subsection{Elaboração do \textit{Software}} \label{section:software}
  
- A tecnologia RAIN RFID, geralmente utilizada para aplicações de \textit{IoT} (Internet das coisas - \textit{Internet of Things} em inglês), exige a implementação de um \textit{middleware} para conectar os dados crus das TAGs registrados pelas leitoras RFID às aplicações de alto nível e de computação em nuvem, como pode ser observado na figura \ref{fig:RFID-Middleware} do capítulo anterior, sessão \ref{section: middleware}. Por esse motivo, o pacote OctaneSDK da Impinj foi escolhido para implementar a aplicação de localização de pessoas. O pacote possui classes prontas de comunicação e configuração das leitoras Impinj Speedway R420 usadas. Será considerado, portanto, que o programa criado não se trata de um \textit{middleware}, mas de uma aplicação apenas, mesmo executando tarefas de comunicação com as leitoras.
+ A tecnologia RAIN RFID, geralmente utilizada para aplicações de \textit{IoT} (Internet das coisas - \textit{Internet of Things} em inglês), exige a implementação de um \textit{middleware} para conectar os dados crus das TAGs registrados pelas leitoras RFID às aplicações de alto nível e de computação em nuvem, como pode ser observado na figura \ref{fig:RFID-Middleware} do capítulo anterior, seção \ref{section: middleware}. Por esse motivo, o pacote OctaneSDK da Impinj foi escolhido para implementar a aplicação de localização de pessoas. O pacote possui classes prontas de comunicação e configuração das leitoras Impinj Speedway R420 usadas. Será considerado, portanto, que o programa criado não se trata de um \textit{middleware}, mas de uma aplicação apenas, mesmo executando tarefas de comunicação com as leitoras.
  
  O \textit{software} elaborado simula internamente o ambiente do LARA como uma Rede de Petri, onde cada estado da rede representa um ambiente do LARA enquanto cada transição representa um par de antenas instaladas nas portas ou passagens. Os marcadores da Rede de Petri representam as TAGs das pessoas, transitando livremente pelos ambientes e transições. Um modelo que representa o funcionamento do programa pode ser visto na figura \ref{fig:Petri1}.
  
- \begin{figure}[H]
+ \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/Petri_net.png}
     \caption{Rede de Petri representando todas as possibilidades circulação de pessoas pelo LARA como estados e transições}
@@ -187,12 +187,14 @@ As leitoras da transição entre os ambientes Sala Principal (1) e Sala de Reuni
 
 Simulando a Rede de Petri é possível observar a ideia da circulação das pessoas pelo espaço do laboratório, onde cada transição ativada leva um marcador de um estado a outro, o que corresponde a uma pessoa cruzando uma fronteira para ir de um ambiente a outro. A figura \ref{fig:Petri2} mostra uma situação imaginária onde cinco pessoas transitam pelo laboratório. As transições marcadas em vermelho são as transições possíveis a partir do estado atual. A situação apresentada mostra duas pessoas na Sala Principal (1), duas pessoas na Sala de Reuniões (2) e uma pessoa no Corredor de Baias (3).
 
- \begin{figure}[H]
+ \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/Petri_net2.png}
     \caption{Rede de Petri representando a circulação de pessoas pelo LARA em um caso hipotético}
     \label{fig:Petri2}
 \end{figure}
+ 
+ Os números próximos a cada seta entre um estado e uma transição nas figuras \ref{fig:Petri1} e \ref{fig:Petri2}, neste caso todos iguais a $1$, mostram o peso de cada transição. Dessa forma, a rede de Petri apresentada nas figuras possui igual probabilidade do acionamento de cada transição. A rede não necessariamente precisa ser implementada com uma entrada e uma saída para cada estado. É possível encadear sequências em série, como o trajeto $"externo" \rightarrow "entra" \rightarrow "ambiente\_mesas" \rightarrow "entra\_1" \rightarrow "sala\_ de\_ reunioes"$.
  
  O programa criado em linguagem de programação C\# é orientado a objeto e cria as seguintes classes:
  
@@ -209,7 +211,7 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
  
  \subsection{Configuração das Leitoras}
 
-  A correta configuração das leitoras é provavelmente a parte mais importante deste trabalho. O estudo cuidadoso de todos os modos de operação possíveis, observando o manual do fabricante \cite{SpeedwayRUserManual}, \textit{datasheet} das leitoras \cite{SpeedwayRDatasheet} e guias de programação e códigos de exemplo \cite{OctaneSDK} resultou na escolha dos parâmetros apresentados nesta sessão.
+  A correta configuração das leitoras é provavelmente a parte mais importante deste trabalho. O estudo cuidadoso de todos os modos de operação possíveis, observando o manual do fabricante \cite{SpeedwayRUserManual}, \textit{datasheet} das leitoras \cite{SpeedwayRDatasheet} e guias de programação e códigos de exemplo \cite{OctaneSDK} resultou na escolha dos parâmetros apresentados nesta seção.
   
   Primeiramente, conecta-se à cada leitora. Para isso, é necessário informar o caminho de rede para realizar a conexão. As leitoras foram configuradas com IP (\textit{Internet Protocol}) fixo, em uma rede local fechada. O uso de uma rede local simplifica o comissionamento dos equipamentos e torna o sistema de localização de pessoas um pouco mais seguro, visto que RFID passivo é uma tecnologia muito suscetível a ataques à privacidade dos usuários e ataques destrutivos, como mostra Juels \textit{et al.} \cite{juels2006rfid}. Para acessar as leitoras, o nome padrão de domínio DNS (Sistema de Nomes de Domínio - em inglês \textit{Domain Name System}) foi utilizado para facilitar a identificação das leitoras. O domínio DNS padrão das leitoras é composto pelo modelo, seguido dos três últimos pares de dígitos do número de série de cada uma, que estão impressos em etiquetas coladas a cada uma.
 
@@ -251,7 +253,7 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
     \label{fig:antenna_settings}
 \end{figure}
 
-  Finalmente, uma última função é ativada: o modo de leitura dos equipamentos é alterado para \textit{"DenseReaderM8"}. Este modo ativa parâmetros internos da leitora para prover a maior quantidade de leituras com a maior confiabilidade possível. Este modo é o equilíbrio entre leituras muito abundantes, mas muito ruidosas, e leituras escassas, mas confiáveis. Ao ativar esse modo, boa parte das leituras devido a reflexão e falsas leituras são filtradas em \textit{hardware}. O comando pode ser visto na figura \ref{fig:readermode_settings}.
+  Finalmente, uma última função é ativada: o modo de leitura dos equipamentos é alterado para \textit{"DenseReaderM8"}. Este modo ativa parâmetros internos da leitora para prover a maior quantidade de leituras com a maior confiabilidade possível. Este modo é modo de funcionamento mais lento, que provê leituras escassas, mas confiáveis. Ao ativar esse modo, boa parte das leituras devido a reflexão e falsas leituras são filtradas em \textit{hardware}. O comando pode ser visto na figura \ref{fig:readermode_settings}.
 
  \begin{figure}[H]
     \centering
@@ -261,6 +263,22 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
 \end{figure}
 
   Após as configurações, as leitoras são iniciadas, uma \textit{tread} de leitura e uma de processamento de dados são abertas, e as configurações estão finalizadas.
+
+\section{Taxa de amostragem} \label{section:amostragem}
+
+A partir da equação \ref{eq:taxadeamostragem}, calcula-se:
+
+\begin{equation}
+    T_A = \frac{1}{900.000.000}*8*800*1 = 0,000007 = 7\mu s
+    \label{eq:amostragem2}
+\end{equation}
+
+Na equação \ref{eq:amostragem2} considerou-se $M=8$, pois o modo de leitura utilizado neste trabalho foi \textit{"DenseReaderM8"}. A quantidade de Bits presentes na TAG utilizazda é $800$. A interferência de múltiplas TAGs foi definida como $1$, para que se calcule o período de amostragem mínimo. Isso resultou em $T_A = 7 \mu s$.
+
+Apesar dos cálculos, empiricamente, que somando os atrasos do \textit{software} interno da Leitora, do \textit{software} desenvolvido neste programa, das comunicações via \textit{Ethernet} e dos casos onde múltiplas TAGs são lidas ao mesmo tempo (caso onde 20 TAGs chegam a atrasar a leitura em até 10 vezes o período normal para a leitura de cada TAG), o período de amostragem de TAGs em situações ideais fica entre $1 ms$ e $30 ms$.
+
+Entretando, considerando ainda as obstruções de sinal do meio físico, a água no corpo do usuário do cartão, as múltiplas superfícies de reflexão do ambiente fechado do LARA e a interferência de sinal com as outras TAGs, antenas, demais fontes de sinal UHF do laboratório e com o próprio sinal de cada TAG refletido nas paredes, chão e teto, o período de amostragem real pode chegar a superar $1$s entre uma leitura e outra.
+
 
  \subsection{Transições}
  
@@ -283,13 +301,13 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
  
  \subsection{Estratégias e casos de teste} \label{section:estrategias}
 
- Durante a fase de planejamento deste trabalho, inicialmente foi cogitado o uso de apenas uma leitora por transição, utilizando apenas as informações fornecidas pelas leitoras de potência de retorno do sinal das TAGs (RSSI) e frequência de efeito Doppler para definição da posição de uma TAG em um ambiente ou outro. Essa ideia foi promissora em um primeiro momento, e chegou a mostrar bons resultados, como pode ser visto na sessão \ref{sect:testepreliminar}. A identificação de um cruzamento de fronteira era feita corretamente na maioria das vezes, e as leituras geralmente produziam dados suficientes para a correta identificação da transição.
+ Durante a fase de planejamento deste trabalho, inicialmente foi cogitado o uso de apenas uma leitora por transição, utilizando apenas as informações fornecidas pelas leitoras de potência de retorno do sinal das TAGs (RSSI) e frequência de efeito Doppler para definição da posição de uma TAG em um ambiente ou outro. Essa ideia foi promissora em um primeiro momento, e chegou a mostrar bons resultados, como pode ser visto na seção \ref{sect:testepreliminar}. A identificação de um cruzamento de fronteira era feita corretamente na maioria das vezes, e as leituras geralmente produziam dados suficientes para a correta identificação da transição.
  
  Entretanto, o problema com esta estratégia é que no momento em que adicionam-se ambientes vizinhos, com outras leitoras e outras antenas próximas, pessoas circulando e uma quantidade maior de TAGs, começam a surgir leituras erradas nas zonas de transição. Por exemplo: No ambiente do LARA, ao realizar o monitoramento com apenas uma antena na transição entre a Sala Principal (1) e a Sala de Reuniões (2), e uma antena na transição entre a Sala Principal (1) e o Corredor de Baias (3), no momento em que se passa por uma, leituras também são captadas pela outra. 
  
  Devido aos caminhos múltiplos que os sinais RF podem tomar em um ambiente fechado devido à reflexão (do chão, teto, paredes e objetos próximos, como mesas, cadeiras, hastes de metal, equipamentos, etc.), a leitura de potência RSSI pode ser enganosa e mostrar a transição em um ambiente, quando na verdade se encontra em outro. Além disso, ao ficar próximo de uma divisória, como a parede da Sala de Reuniões (2), em alguns casos, sinais podem ser captados em antenas de fora da sala, enganando o programa e registrando uma troca de sala para outro ambiente. Por esse motivo, uma topologia similar à usada em sistemas de gerenciamento de estoque e sistemas  controle de carga e descarga de caminhões \cite{PortalRFID} foi considerada como uma alternativa mais robusta do que apenas a detecção da presença de uma TAG.
  
- Disponibilizando duas antenas para cada transição, é possível obter informações mais confiáveis de leitura, e ainda possui a vantagem de saber o sentido da travessia. Dessa forma, diminui-se o risco de registrar a entrada ou saída de uma pessoa em um ambiente apenas por registrar leituras de proximidade a uma antena. As antenas foram posicionadas de maneira similar à observada na figura \ref{fig:antenas1}. Esta foto, apesar de não ser o local final, permite a visualização da orientação e espaçamento das antenas para registrar a travessia de uma pessoa em sua frente.
+ Disponibilizando duas antenas para cada transição, é possível obter informações mais confiáveis de leitura, e ainda possui a vantagem de saber o sentido da travessia. Dessa forma, diminui-se o risco de registrar a entrada ou saída de uma pessoa em um ambiente apenas por registrar leituras de proximidade a uma antena. As antenas foram posicionadas de maneira similar à observada na figura \ref{fig:antenas1}. Esta foto, apesar de não ser o local final, permite a visualização da orientação e espaçamento das antenas para registrar a travessia de uma pessoa em sua frente. As leitoras e antenas, instaladas em seu local definitivo, podem ser visualizadas nas figuras \ref{fig:cruzamento01}, \ref{fig:cruzamento10}, \ref{fig:cruzamento12}, \ref{fig:cruzamento21}, \ref{fig:cruzamento13} e \ref{fig:cruzamento31}.
  
   \begin{figure}[H]
     \centering
@@ -317,9 +335,9 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
 
  \subsubsection{Comparando o tempo dos últimos picos das curvas de RSSI} \label{section:picos_met}
  
- Aprimorando a ideia da sessão \ref{section:ultimo_valor_met}, caso o valor das últimas leituras das antenas seja armazenado, mais informações podem ser obtidas do que apenas a proximidade instantânea das antenas.
+ Aprimorando a ideia da seção \ref{section:ultimo_valor_met}, caso o valor das últimas leituras das antenas seja armazenado, mais informações podem ser obtidas do que apenas a proximidade instantânea das antenas.
  
- Criando curvas que armazenam esses valores, como discutido na sessão \ref{section:curvas}, é possível analisar toda a trajetória da pessoa em frente às antenas. Utilizando as curvas fictícias das figuras \ref{fig:rssicurvesmet1} e \ref{fig:rssicurvesmet2}, é possível explicar a ideia da comparação de picos.
+ Criando curvas que armazenam esses valores, como discutido na seção \ref{section:curvas}, é possível analisar toda a trajetória da pessoa em frente às antenas. Utilizando as curvas fictícias das figuras \ref{fig:rssicurvesmet1} e \ref{fig:rssicurvesmet2}, é possível explicar a ideia da comparação de picos.
  
 \begin{figure}[H]
     \centering
@@ -354,18 +372,26 @@ Um caso mais complicado onde a pessoa volta para o caminho de onde veio é mostr
 \subsubsection{Comparando a média das curvas de potência RSSI} \label{section:mean_met}
 
  Dado que se possui um \textit{buffer} repleto dos últimos dados de potência RSSI, obtidos pelas curvas armazenadas, considera-se a ideia de que a média desses valores possa indicar o lado da antena mais próxima. Estima-se que as últimas coletas de valores de RSSI na antena mais próxima, maiores que os da antena adjacente, possam fornecer bons indicadores de qual ambiente a pessoa ocupa.
-
-
+ 
+ A figura \ref{fig:mediamediana_met} mostra um comparativo entre duas curvas e suas médias, em uma situação hipotética onde uma pessoa permanece mais próxima da antena $y_1$ do que da antena $y_2$ por tempo suficiente para que as leituras de dados de RSSI preencham toda a curva.
 
 \subsubsection{Combinando a mediana das curvas de potência RSSI} \label{section:median_met}
  
  Da mesma forma, aproveitando os dados das curvas, estima-se que a mediana dos dados seja maior do lado onde os últimos registros de leitura de TAG sejam feitos.
+ 
+  A figura \ref{fig:mediamediana_met} mostra um comparativo entre duas curvas e suas medianas, assim como as médias. O valor das medianas geralmente é diferente, mas não muito distante do valor das médias.
 
+   \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figs/Metodologia/mediamediana.png}
+    \caption{Exemplo de curvas RSSI com dados gerados artificialmente para cálculo de médias e medianas das curvas}
+    \label{fig:mediamediana_met}
+\end{figure}
  
 
  \subsubsection{Utilizando o Efeito Doppler como critério de travessia} \label{section:doppler_met}
  
-  O outro dado relevante para utilização como critério de rastreamento de pessoas é a frequência Doppler. Os dados fornecidos pelas leitoras indicam um número proporcional à componente de velocidade vetorial ortogonal à antena, como visto na sessão \ref{section:doppler_fund}. A figura \ref{fig:doppler_MET} mostra dados gerados artificialmente de frequência Doppler simulando uma pessoa caminhando em velocidade constante em frente às antenas.
+  O outro dado relevante para utilização como critério de rastreamento de pessoas é a frequência Doppler. Os dados fornecidos pelas leitoras indicam um número proporcional à componente de velocidade vetorial ortogonal à antena, como visto na seção \ref{section:doppler_fund}. A figura \ref{fig:doppler_MET} mostra dados gerados artificialmente de frequência Doppler simulando uma pessoa caminhando em velocidade constante em frente às antenas.
  
    \begin{figure}[H]
     \centering
