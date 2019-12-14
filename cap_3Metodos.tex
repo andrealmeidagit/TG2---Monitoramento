@@ -298,6 +298,13 @@ Entretando, considerando ainda as obstruções de sinal do meio físico, a água
  
  Após encher o \textit{buffer}, cada próxima leitura será armazenada no final da lista, após a retirada do primeiro elemento, tornando o \textit{buffer} uma fila.
 
+\subsubsection{Coleta de dados}
+
+Os dados coletados pela leitora utilizada neste projeto são, por vezes, ruidosos ou inconstantes. Valores de potência RSSI, quando traçados em curvas, costumam apresentar \textit{outliers} frequentemente, com valores muito acima ou muito abaixo do esperado em algumas leituras. Já os valores de variação de frequência por efeito Doppler possuem bastante ruído na faixa próxima de zero Hertz.
+
+Dadas as inconstâncias nos dados, para fazer um tratamento prévio à execução dos casos de teste (seção \ref{section:estrategias}), um filtro de média móvel de três posições foi aplicado em todos os dados coletados. Dessa maneira, os \textit{outliers} são rejeitados, sem afetar severamente a curva de dados, por se tratar de um filtro de grau 3.
+
+Para os valores de frequência Doppler, uma outra tática foi implementada, além do filtro de médias móveis: um filtro rejeita-bandas foi implementado, rejeitando, assim, todos os valores lidos entre $-0,5\leq f_D\leq 0,5$. Esse filtro rejeita-banda funciona como um gerador de histerese para o método de transição de ambientes por efeito Doppler (seção \ref{section:doppler_met}), impedindo que haja múltiplas leituras para apenas uma transição.
  
  \subsection{Estratégias e casos de teste} \label{section:estrategias}
 
