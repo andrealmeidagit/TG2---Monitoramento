@@ -16,7 +16,7 @@
 
 A comunicação do tipo Identificação por Radiofrequência – \textit{Radio Frequency Identification} (RFID) – é um tipo de comunicação sem fio por sinais de rádio. O RFID é uma alternativa de identificação útil em aplicações que exigem a leitura de grandes quantidades de dados \cite{rao1999overview}. 
 
-A composição geral do RFID é feita por uma \textit{TAG} (etiqueta ou transpônder) e uma leitora (\textit{reader}) que são incorporadas com um transmissor e um receptor \cite{EPC-RFID-link}. A leitora (ou interrogadora) possui uma antena para comunicação com as TAGs e, na maioria dos casos, uma saída para comunicação com um computador ou servidor. Isso pode ser observado na figura \ref{fig:ComposicaoRFID}.
+A composição geral do RFID é feita por uma \textit{TAG} (etiqueta ou transpônder) e uma leitora (\textit{reader}) que são incorporadas com um transmissor e um receptor \cite{EPC-RFID-link}. A leitora (ou interrogadora) possui uma antena para comunicação com as TAGs e, na maioria dos casos, uma saída para comunicação com um computador ou servidor. Alguns autores adicionam, como parte de um sistema RFID, uma interface homem-máquina (IHM) e \textit{softwares} de ERP (Sistema de gestão empresarial, em inglês - \textit{Enterprise Resource Planning}) para EPCs (Engenharia, aquisições e construção, em inglês - \textit{Engineering, Procurement and Construction}), ou ainda, programas e dispositivos de computação em nuvem. Isso pode ser observado na figura \ref{fig:ComposicaoRFID}.
 
 \begin{figure}[h]
     \centering
@@ -52,7 +52,7 @@ A figura \ref{fig:DetalhesRFID} mostra os elementos internos dos dispositivos de
 
 Chen et al. \cite{chenUsingRFID} define RFID como o conjunto de TAGs, leitoras, \textit{middleware} e sistema de aplicação, como pode ser visto na figura \ref{fig:RFID-Middleware}.
 
-\begin{figure}[H]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.6\linewidth]{figs/Fundamentos/RFID.png}
     \caption{Topologia de comunicação do \textit{middleware} RFID (Adaptado de Chen \textit{et al.} \cite{chenUsingRFID})}
@@ -234,9 +234,13 @@ A imagem \ref{fig:impactoFrec} de Oliveira e Rocha \cite{TG2013OliveiraERocha}, 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Fundamentos/frequencia.png}
-    \caption{Impacto da frequência de operação nas leituras RFID. (Fonte: Oliveira e Rocha \cite{TG2013OliveiraERocha}, adaptado de Thornton e Sanghera \cite{thornton2011cheat})}
+    \caption{Impacto da frequência de operação nas leituras RFID. (Adaptado de \cite{TG2013OliveiraERocha} e \cite{thornton2011cheat})}
     \label{fig:impactoFrec}
 \end{figure}
+
+A caracterização do sistema e das etiquetas passivas utilizados pode ser caracterizada na porção mais à direita do gráfico da figura \ref{fig:impactoFrec}, por se tratar de um sistema UFH, o que indica que as TAGs não necessitam de um tamanho exageradamente grande, e que o alcance do sistema é maior.
+
+O gráfico da figura \ref{fig:impactoFrec} pode ser analisado alocando os sistemas LF à esquerda, onde o alcance é menor e o desempenho próximo à água e metais é melhor, progredindo para a direita na ordem: HF, UHF e micro ondas. A cada progressão de banda de frequência, o alcance do sistema é aprimorado à custa do desempenho quando próximo de materiais problemáticos para sinais RF.
 
 \subsection{RSSI}
 
@@ -258,7 +262,7 @@ O sinal RSSI é calculado a partir do módulo da diferença dos coeficientes de 
     \label{eq:rssiFUNDa}
 \end{equation}
 
-Na equação \ref{eq:rssiFUNDa} $k$ representa uma constante, $x$ e $y$ representam as coordenadas da TAG em relação à leitora, e $\Gamma_{CM}$ e $\Gamma_{SC}$ representam os coeficientes de refração do sinal de retorno quando a TAG utiliza a carga de impedância combinada conjugada ($Z_{CM}$) ou o curto-circuito ($Z_{SC}$). O coeficiente $\Gamma$ é proporcional à relação entre as amplitudes do sinal enviado pela leitora e pelo sinal de retorno da TAG lido pela antena, de acordo com a equação \ref{eq:rssiFUNDb}.
+Na equação \ref{eq:rssiFUNDa} $k$ representa uma constante, $x$ e $y$ representam as coordenadas da TAG em relação à leitora, e $\Gamma_{CM}$ e $\Gamma_{SC}$ representam os coeficientes de refração do sinal de retorno. O coeficiente $\Gamma$ é proporcional à relação entre as amplitudes do sinal enviado pela leitora e pelo sinal de retorno da TAG lido pela antena, de acordo com a equação \ref{eq:rssiFUNDb}.
 
 \begin{equation}
     \Gamma = \frac{b_1}{a_1}
@@ -266,6 +270,8 @@ Na equação \ref{eq:rssiFUNDa} $k$ representa uma constante, $x$ e $y$ represen
 \end{equation}
 
 Na equação \ref{eq:rssiFUNDb} $a_1$ é a amplitude do sinal enviado pela leitora e $b_1$ é a amplitude do sinal de resposta capturado pela antena.
+
+As equações \ref{eq:rssiFUNDa} e \ref{eq:rssiFUNDb} discutidas nesta seção são apresentadas para informar o leitor da origem e dos cálculos feitos internamente pela leitora Impinj \textit{Speedway} R420, modelo utilizado neste trabalho e apresentado na seção \ref{section:met-leitora}. Estes cálculos são feitos diretamente em \textit{hardware} e tratados no \textit{middleware} da leitora e, portanto, não se executam tais cálculos neste trabalho. As informações de RSSI são adquiridas diretamente da leitora para uso do programa criado neste trabalho.
     
 \section{Rede de Petri}
     
@@ -323,6 +329,8 @@ Na equação \ref{eq:deltaTheta}, $\theta_1$ e $\theta_2$ são as leituras de fa
 \end{figure}
 
 A figura \ref{fig:dopplerFund} mostra uma TAG em duas posições espaciais diferentes, em tempos $t_1$ e $t_2$ diferentes. Em cada posição o sinal de leitura retorna à antena com uma fase $\theta$ diferente.
+
+Assim como o valor de RSSI, o valor de frequência de efeito Doppler é calculado internamente em \textit{hardware} e \textit{middleware} da leitora Impinj \textit{Speedway} R420. Não será calculada a frequência Doppler neste trabalho, sendo que as leituras realizadas pelo equipamento utilizado já informam, juntamente às outras informações da TAG (número EPD e valor RSSI), o valor de frequência Doppler.
     
 \section{Localização \textit{indoor}}
 
@@ -338,4 +346,4 @@ A grande diferença entre as técnicas de rastreamento do RFID ativo e passivo �
 
 Algumas implementações, como a de Tesoriero \textit{et al.} \cite{tesoriero2008using}, inovam ao misturar sensores ativos e passivos. Sua pesquisa apresenta o ambiente de um museu, onde os visitantes carregam PDAs (Assistentes Pessoais Digitais - em inglês \textit{Personal Digital Assistants} que são leitoras RFID passivo, e as TAGs marcam os locais e as obras, invertendo o papel padrão dos elementos, e criando um mapa do museu a partir do posicionamento das TAGs.
 
-Utilizando os recursos disponíveis na UnB e no LARA, este trabalho propõe uma solução própria, que será explanada na sessão \ref{chap:Metodos}.
+Utilizando os recursos disponíveis na UnB e no LARA, este trabalho propõe uma solução própria, que será explanada no capítulo \ref{chap:Metodos} - Metodologia.

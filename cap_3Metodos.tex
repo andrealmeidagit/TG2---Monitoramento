@@ -2,37 +2,43 @@
 \chapter{Metodologia\label{chap:Metodos}}
 
 % Resumo opcional. Comentar se não usar.
-%\resumodocapitulo{resumo}
+\resumodocapitulo{Este capítulo apresenta o processo de desenvolvimento do programa de monitoramento de ocupação de ambientes. A descrição dos materiais utilizados, da instalação física e a criação de estratégias de localização de pessoas são os destaques do texto.}
 
 
 \section{Materiais}
-\subsection{Hardware}
-\subsubsection{Leitora RFID Impinj Speedway R420}
 
-A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \textit{tags} de RFID passivo. Ela é capaz de operar na faixa de frequência de 860-960 MHz, sendo que o modelo específico licenciado para o Brasil permite operações entre 902,5 e 907 MHz. Pode emitir sinais de até 32,25 dBm de potência na transmissão e é capaz de receber um sinal com a sensibilidade mínima de -80 dBm e perda de retorno de 10 dB \cite{SpeedwayRDatasheet} \cite{SpeedwayRUserManual} \cite{TG2013OliveiraERocha}. A figura \ref{fig:SpeedwayR420_first} mostra uma foto da leitora.
+A execução desse trabalho contou com os materiais de excelente qualidade disponíveis no laboratório e adquiridos para esta aplicação específica, que foram apresentadas na seção \ref{section:met-hardware}, assim como as ferramentas computacionais descritas na seção \ref{section:met-software}.
 
-    \begin{figure}[H]
+\subsection{\textit{Hardware}} \label{section:met-hardware}
+
+Nesta parte do texto foram apresentadas as especificações, capacidades e limitações de equipamentos RFID - mais especificamente, a leitora, antena e TAGs utilizadas.
+
+\subsubsection{Leitora RFID Impinj Speedway R420} \label{section:met-leitora}
+
+A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \textit{tags} de RFID passivo. Ela é capaz de operar na faixa de frequência UHF (860-960 MHz), sendo que o modelo específico licenciado para o Brasil permite operações entre 902,5 e 907 MHz. Pode emitir sinais de até 32,25 dBm de potência na transmissão e é capaz de receber um sinal com a sensibilidade mínima de -80 dBm e perda de retorno de 10 dB \cite{SpeedwayRDatasheet} \cite{SpeedwayRUserManual} \cite{TG2013OliveiraERocha}. A figura \ref{fig:SpeedwayR420_first} mostra uma foto da leitora.
+
+    \begin{figure}[h]
         \centering
-        \includegraphics[width=0.55\linewidth]{figs/Metodologia/leitoraSpeedwayR420.jpg}
+        \includegraphics[width=0.8\linewidth]{figs/Metodologia/leitoraSpeedwayR420.jpg}
         \caption{Leitora Impinj Speedway R420 \cite{SpeedwayRUserManual}}
         \label{fig:SpeedwayR420_first}
     \end{figure}
 
  A leitora é capaz de registrar até 1100 etiquetas por segundo. Ela possui portas suficientes para o acoplamento de até 4 antenas, expansível até 32 antenas utilizando \textit{Hubs} específicos para esta aplicação. Dois protocolos são utilizados para a interface por ar: \textit{GS1/EPCglobal UHF Gen2 (ISO 18000-6C)} e \textit{RAIN RFID} \cite{SpeedwayRDatasheet}\cite{SpeedwayRUserManual}. As portas de conexão das antenas podem ser vistas na figura \ref{fig:SpeedwayR420front}.
  
-     \begin{figure}[H]
+     \begin{figure}[h]
         \centering
-        \includegraphics[width=0.6\linewidth]{figs/Metodologia/SpeedwayR420-front-view.png}
-        \caption{Leitora Impinj Speedway R420 - vista frontal \cite{SpeedwayRUserManual}.}
+        \includegraphics[width=0.8\linewidth]{figs/Metodologia/SpeedwayR420-front-view.png}
+        \caption{Leitora Impinj Speedway R420 - vista frontal - Adaptado de \cite{SpeedwayRUserManual}.}
         \label{fig:SpeedwayR420front}
     \end{figure}
  
  Existem diversas portas na parte traseira da leitora Speedway R420. Uma delas é uma porta \textit{10/100 BaseT Ethernet} para comunicação em TCP/IP. A comunicação por TCP/IP é ideal para o uso comum, utilizando os softwares comercializados pela Impinj ou por programas feitos utilizando o pacote \textit{Impinj OctaneSDK}. Além dessa porta, a comunicação pode ser feita por USB ou por comunicação serial RS-232 em um conector RJ45 para acesso ao console embarcado na leitora. As portas seriais são ideais para utilização dos pacotes \textit{Impinj LTK} de programação em baixo nível, utilizando o padrão \textit{Low Level Reader Protocol} (LLRP). Baixo nível, neste caso, implica capacidade de alterar o protocolo de operação, o modo de marcação de tempo e dos parâmetros de comando por ar\cite{GS1-LLRP}\cite{SpeedwayRUserManual}. A visão traseira da leitora é apresentada na figura \ref{fig:SpeedwayR420back}.
  
-\begin{figure}[H]
+\begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\linewidth]{figs/Metodologia/SpeedwayR420-back-view.png}
-    \caption{Leitora Impinj Speedway R420 - vista traseira - Foto obtida no manual de instalação e operação da leitora \cite{SpeedwayRUserManual}.}
+    \includegraphics[width=0.9\linewidth]{figs/Metodologia/SpeedwayR420-back-view.png}
+    \caption{Leitora Impinj Speedway R420 - vista traseira - Foto obtida no manual de instalação e operação da leitora - Adaptado de \cite{SpeedwayRUserManual}.}
     \label{fig:SpeedwayR420back}
 \end{figure}
  
@@ -46,12 +52,12 @@ A Speedway R420 da fabricante Impinj é uma pequena leitora estacionária de \te
  
  \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{figs/Metodologia/impinj_Threshold.png}
+    \includegraphics[width=0.6\linewidth]{figs/Metodologia/impinj_Threshold.png}
     \caption{Antena Impinj Threshold - Foto obtida no \textit{datasheet} da antena \cite{AntenaThresholdDatasheet}}
     \label{fig:AntenaThreshold_first}
 \end{figure}
  
- A antena opera em duas faixas de frequência: 902-928 MHz (FCC) e 865-868 MHz (ETSI), possui um ganho de campo distante de 5.0 dBi e impedância nominal de 50 $\Omega$ \cite{AntenaThresholdDatasheet}. A antena cobre um volume elipsoidal de 3m de comprimento por 4m de largura por 3m de altura, como pode ser visto na figura \ref{fig:AntenaThresholdCobertura}.
+ A antena opera em duas faixas de frequência UHF: 902-928 MHz (FCC) e 865-868 MHz (ETSI), possui um ganho de campo distante de 5.0 dBi e impedância nominal de 50 $\Omega$ \cite{AntenaThresholdDatasheet}. A antena cobre um volume elipsoidal de dimensões 3m x 4m x 3m, como pode ser visto na figura \ref{fig:AntenaThresholdCobertura}.
  
   \begin{figure}[H]
     \centering
@@ -72,7 +78,7 @@ As TAGs utilizadas são impressas em adesivos pela empresa Nycti BR. Elas utiliz
     \item ativado em baixíssimas potências de alimentação, ainda provendo excelente sinal de resposta de retroespalhamento. \cite{AlienHiggs3}
 \end{itemize}
 
-A figura \ref{fig:TAGsused} a seguir mostra as TAGs utilizadas para monitorar o trânsito das pessoas no interior dos ambientes pre-estabelecidos.
+A figura \ref{fig:TAGsused} mostra as TAGs utilizadas para monitorar o trânsito das pessoas no interior dos ambientes pre-estabelecidos.
 
  \begin{figure}[H]
     \centering
@@ -85,7 +91,7 @@ A figura \ref{fig:TAGsused} a seguir mostra as TAGs utilizadas para monitorar o 
  
  \subsubsection{Quantitativo}
  
- Este trabalho conta com leitoras e antenas RFID, além do espaço para trabalho e testes, gentilmente cedidos pelo Laboratório de Automação e Robótica (LARA) da UnB. No que se refere aos equipamentos, foram utilizados com os seguintes dispositivos:
+ Este trabalho conta com leitoras e antenas RFID, além do espaço para trabalho e testes, gentilmente cedidos pelo Laboratório de Automação e Robótica (LARA) da UnB. No que se refere aos equipamentos, foram utilizados os seguintes dispositivos:
  
  \begin{itemize}
      \item 3 (três) Leitoras IMPINJ Speedway R420 (cedidas pelo LARA)
@@ -95,7 +101,9 @@ A figura \ref{fig:TAGsused} a seguir mostra as TAGs utilizadas para monitorar o 
      \item cabeamento e fontes de alimentação necessários
  \end{itemize}
  
- \subsection{Software}
+ \subsection{Software} \label{section:met-software}
+ 
+ Nesta parte do texto foram apresentadas as ferramentas computacionais utilizadas, suas características principais e como foram úteis na produção deste trabalho.
  
  \subsubsection{OctaneSDK}
  
@@ -110,10 +118,10 @@ A figura \ref{fig:TAGsused} a seguir mostra as TAGs utilizadas para monitorar o 
  
  \section{Abordagem utilizada} \label{abordagem}
  
- Três pontos foram essenciais para a execução deste trabalho: a implementação física das leitoras, antenas e demais equipamentos no local de teste; o \textit{software} de detecção de pessoas e cruzamento de fronteiras para a contagem de pessoas em um determinado ambiente;  e a elaboração de casos de teste para  validação da abordagem. Estes pontos serão descritos nas seções a seguir.
+ Três pontos foram essenciais para a execução deste trabalho: a instalação física das leitoras, antenas e demais equipamentos no local de teste; o \textit{software} de detecção de pessoas e cruzamento de fronteiras para a contagem de pessoas em um determinado ambiente;  e a elaboração de casos de teste para  validação da abordagem. Estes pontos serão descritos nas seções a seguir.
  
   
- \subsection{Implementação física}
+ \subsection{Instalação física}
  
  As leitoras e as antenas utilizadas neste trabalho possuem um grande campo de cobertura relativo a outros modelos de equipamentos RFID passivo. Entretanto, a cobertura de sinal anunciada pelo fabricante é válida para ambientes abertos e sem a presença de objetos que possam interferir no sinal, como: mesas, cadeiras, equipamentos e pessoas.
  
@@ -124,9 +132,16 @@ A figura \ref{fig:TAGsused} a seguir mostra as TAGs utilizadas para monitorar o 
  \subsection{O local} \label{section:local}
  
 
- O Laboratório de Automação e Robótica (LARA) foi o local para simulação do ambiente de teste do sistema criado, especificamente, a metade sul do laboratório, onde se encontram os ambientes de estudo geral e a sala de reuniões.
+ O Laboratório de Automação e Robótica (LARA) foi o local para simulação do ambiente de teste do sistema criado, especificamente, a metade sul do laboratório, onde se encontram os ambientes de estudo geral e a sala de reuniões. A planta baixa do laboratório pode ser observada na figura \ref{fig:LARA_plata}.
  
- Esta parte do laboratório foi subdividida em quatro ambientes: o Ambiente Externo (0), a Sala Principal (1), Sala de Reuniões (2) e o Corredor de Baias (3), como pode ser observado na planta baixa da figura \ref{fig:LARA_planta}.
+   \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figs/Metodologia/LARA_planta.PNG}
+    \caption{Imagem apresentando a planta baixa do LARA}
+    \label{fig:LARA_plata}
+\end{figure}
+ 
+ Esta parte do laboratório foi subdividida em quatro ambientes: o Ambiente Externo (0), a Sala Principal (1), Sala de Reuniões (2) e o Corredor de Baias (3), como apresentado na marcação sobre a planta baixa, na figura \ref{fig:LARA_planta}.
 
   \begin{figure}[H]
     \centering
@@ -135,7 +150,7 @@ A figura \ref{fig:TAGsused} a seguir mostra as TAGs utilizadas para monitorar o 
     \label{fig:LARA_planta}
 \end{figure}
 
-O ambiente do laboratório pode ser melhor visualizado nas figuras \ref{fig:LARA1} e \ref{fig:LARA2} abaixo. As figuras mostram as projeções tridimensionais do laboratório, a partir de dois pontos de vista diferentes, para melhor compreensão do ambiente de estudo.
+O ambiente do laboratório pode ser melhor visualizado nas figuras \ref{fig:LARA1} e \ref{fig:LARA2}. As figuras mostram as projeções tridimensionais do laboratório, a partir de dois pontos de vista diferentes, para melhor compreensão do ambiente de estudo.
 
   \begin{figure}[H]
     \centering
@@ -151,13 +166,13 @@ O ambiente do laboratório pode ser melhor visualizado nas figuras \ref{fig:LARA
     \label{fig:LARA2}
 \end{figure}
 
-As três leitoras foram designadas para tratar os dados das transições. A leitora 1 (L1) trata os dados da transição entre o Ambiente Externo (0) e a Sala Principal (1); a Leitora 2 (L2) é responsável por capturar os dados da transição entre a Sala Principal (1) e a Sala de Reuniões (2); a Leitora 3 registra os cartões que passam pela transição entre a Sala Principal (1) e o Corredor de Baias (3). Cada leitora é representada por um retângulo cinza na figura \ref{fig:LARA_planta} e possui duas antenas para registrar as \textit{tags} que passam na região.
+As três leitoras foram designadas para tratar os dados das transições. A leitora 1 (L1) trata os dados da transição entre o Ambiente Externo (0) e a Sala Principal (1); a Leitora 2 (L2) é responsável por capturar os dados da transição entre a Sala Principal (1) e a Sala de Reuniões (2); a Leitora 3 registra os cartões que passam pela transição entre a Sala Principal (1) e o Corredor de Baias (3). Cada leitora é representada por um retângulo cinza na figura \ref{fig:LARA_planta} e possui duas antenas para registrar as TAGs que passam na região.
 
 As antenas foram dispostas em locais estratégicos para se obter as leituras mais precisas, nos locais de transição de interesse. Estes locais estão localizados próximos às portas ou passagens onde estão as fronteiras dos ambientes definidos. As antenas podem ser vistas como retângulos pretos de borda cinza na figura \ref{fig:LARA_planta} e pelo desenho da leitora real nas figuras \ref{fig:LARA1} e \ref{fig:LARA1}.
 
-As leitoras da transição entre os ambientes Sala Principal (1) e Sala de Reuniões (2) e da transição entre os ambientes Sala Principal (1), Corredor de Baias (3) foram instaladas em posições opostas da sala para minimizar a ocorrência de leitura das \textit{tags} pelas duas leitoras ao mesmo tempo.
+As leitoras da transição entre os ambientes Sala Principal (1) e Sala de Reuniões (2) e da transição entre os ambientes Sala Principal (1), Corredor de Baias (3) foram instaladas em posições opostas da sala para minimizar a ocorrência de leitura das TAGs pelas duas leitoras ao mesmo tempo. A marcação feita sobre a planta baixa, apresentada na figura \ref{fig:LARA_planta}, mostra em laranja, uma elipse estimando o alcance do campo de leituras da interrogadora L1, em azul, da leitora L2 e, em verde, a elipse de alcance da leitora L3. 
 
- \subsection{Elaboração do Software} \label{section:software}
+ \subsection{Elaboração do \textit{Software}} \label{section:software}
  
  A tecnologia RAIN RFID, geralmente utilizada para aplicações de \textit{IoT} (Internet das coisas - \textit{Internet of Things} em inglês), exige a implementação de um \textit{middleware} para conectar os dados crus das TAGs registrados pelas leitoras RFID às aplicações de alto nível e de computação em nuvem, como pode ser observado na figura \ref{fig:RFID-Middleware} do capítulo anterior, sessão \ref{section: middleware}. Por esse motivo, o pacote OctaneSDK da Impinj foi escolhido para implementar a aplicação de localização de pessoas. O pacote possui classes prontas de comunicação e configuração das leitoras Impinj Speedway R420 usadas. Será considerado, portanto, que o programa criado não se trata de um \textit{middleware}, mas de uma aplicação apenas, mesmo executando tarefas de comunicação com as leitoras.
  
@@ -270,9 +285,11 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
 
  Durante a fase de planejamento deste trabalho, inicialmente foi cogitado o uso de apenas uma leitora por transição, utilizando apenas as informações fornecidas pelas leitoras de potência de retorno do sinal das TAGs (RSSI) e frequência de efeito Doppler para definição da posição de uma TAG em um ambiente ou outro. Essa ideia foi promissora em um primeiro momento, e chegou a mostrar bons resultados, como pode ser visto na sessão \ref{sect:testepreliminar}. A identificação de um cruzamento de fronteira era feita corretamente na maioria das vezes, e as leituras geralmente produziam dados suficientes para a correta identificação da transição.
  
- Entretanto, o problema com esta estratégia é que no momento em que adicionam-se ambientes vizinhos, com outras leitoras e outras antenas próximas, pessoas circulando e uma quantidade maior de TAGs, começam a surgir leituras erradas nas zonas de transição. Por exemplo: No ambiente do LARA, ao realizar o monitoramento com apenas uma antena na transição entre a Sala Principal (1) e a Sala de Reuniões (2), e uma antena na transição entre a Sala Principal (1) e o Corredor de Baias (3), no momento em que se passa por uma, leituras também são captadas pela outra. Devido aos caminhos múltiplos que os sinais RF podem tomar em um ambiente fechado devido à reflexão (do chão, teto, paredes e objetos próximos, como mesas, cadeiras, hastes de metal, equipamentos, etc.), a leitura de potência RSSI pode ser enganosa e mostrar a transição em um ambiente, quando na verdade se encontra em outro. Além disso, ao ficar próximo de uma divisória, como a parede da Sala de Reuniões (2), em alguns casos, sinais podem ser captados em antenas de fora da sala, enganando o programa e registrando uma troca de sala para outro ambiente.
+ Entretanto, o problema com esta estratégia é que no momento em que adicionam-se ambientes vizinhos, com outras leitoras e outras antenas próximas, pessoas circulando e uma quantidade maior de TAGs, começam a surgir leituras erradas nas zonas de transição. Por exemplo: No ambiente do LARA, ao realizar o monitoramento com apenas uma antena na transição entre a Sala Principal (1) e a Sala de Reuniões (2), e uma antena na transição entre a Sala Principal (1) e o Corredor de Baias (3), no momento em que se passa por uma, leituras também são captadas pela outra. 
  
- Por esse motivo, uma topologia similar à usada em sistemas de gerenciamento de estoque, usada em controle de carga e descarga de caminhões, assim como entrada e saída de itens em estoque \cite{PortalRFID}. Disponibilizando duas antenas para cada transição, é possível obter informações mais confiáveis de leitura, e ainda possui a vantagem de saber o sentido da travessia. Dessa forma, diminui-se o risco de registrar a entrada ou saída de uma pessoa em um ambiente apenas por registrar leituras de proximidade a uma antena. As antenas foram posicionadas de maneira similar à observada na figura \ref{fig:antenas1}. Esta foto, apesar de não ser o local final, permite a visualização da orientação e espaçamento das antenas para registrar a travessia de uma pessoa em sua frente.
+ Devido aos caminhos múltiplos que os sinais RF podem tomar em um ambiente fechado devido à reflexão (do chão, teto, paredes e objetos próximos, como mesas, cadeiras, hastes de metal, equipamentos, etc.), a leitura de potência RSSI pode ser enganosa e mostrar a transição em um ambiente, quando na verdade se encontra em outro. Além disso, ao ficar próximo de uma divisória, como a parede da Sala de Reuniões (2), em alguns casos, sinais podem ser captados em antenas de fora da sala, enganando o programa e registrando uma troca de sala para outro ambiente. Por esse motivo, uma topologia similar à usada em sistemas de gerenciamento de estoque e sistemas  controle de carga e descarga de caminhões \cite{PortalRFID} foi considerada como uma alternativa mais robusta do que apenas a detecção da presença de uma TAG.
+ 
+ Disponibilizando duas antenas para cada transição, é possível obter informações mais confiáveis de leitura, e ainda possui a vantagem de saber o sentido da travessia. Dessa forma, diminui-se o risco de registrar a entrada ou saída de uma pessoa em um ambiente apenas por registrar leituras de proximidade a uma antena. As antenas foram posicionadas de maneira similar à observada na figura \ref{fig:antenas1}. Esta foto, apesar de não ser o local final, permite a visualização da orientação e espaçamento das antenas para registrar a travessia de uma pessoa em sua frente.
  
   \begin{figure}[H]
     \centering
@@ -285,7 +302,7 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
 
  \subsubsection{Comparando a magnitude do último valor de RSSI capturado} \label{section:ultimo_valor_met}
  
- Iniciando pela ideia mais simples: compara-se as últimas leituras em ambas as antenas. O princípio é utilizar a informação de potência do sinal de retorno das TAGs para a leitora, o sinal RSSI, como indicador de proximidade de uma antena. Quanto mais próximo uma TAG está de uma antena, maior é o sinal RSSI registrado. Quanto mais distante uma TAG está da antena, menor é o sinal. Testes com as TAGs utilizadas no projeto mostraram que, quando estão rentes às antenas, encostando nelas, o sinal RSSI registrado chega a ser maior que $-30dB$. Ao afastar a TAG da antena, com a face da etiqueta apontando para ela, na orientação mais favorável à leitura pela antena (devido à polarização do sinal), o sinal mais fraco registrado foi ligeiramente menor que $-70dB$. O fabricante indica que as antenas são capazes de registrar até $-90dB$ de sinal de retorno RSSI, mas com as TAGs utilizadas e em um ambiente poluído para aplicações de RF uma leitura tão fraca não existiu.
+ Iniciando pela ideia mais simples: comparam-se as últimas leituras em ambas as antenas. O princípio é utilizar a informação de potência do sinal de retorno das TAGs para a leitora, o sinal RSSI, como indicador de proximidade de uma antena. Quanto mais próximo uma TAG está de uma antena, maior é o sinal RSSI registrado. Quanto mais distante uma TAG está da antena, menor é o sinal. Testes com as TAGs utilizadas no projeto mostraram que, quando estão rentes às antenas, encostando nelas, o sinal RSSI registrado chega a ser maior que $-30dB$. Ao afastar a TAG da antena, com a face da etiqueta apontando para ela, na orientação mais favorável à leitura pela antena (devido à polarização do sinal), o sinal mais fraco registrado foi ligeiramente menor que $-70dB$. O fabricante indica que as antenas são capazes de registrar até $-90dB$ de sinal de retorno RSSI, mas com as TAGs utilizadas e em um ambiente poluído para aplicações de RF uma leitura tão fraca não existiu.
  
  Considerando que uma pessoa passe em frente às leitoras da foto \ref{fig:antenas1} da direita para a esquerda, ou da esquerda para a direita, comparando-se o valor da magnitude da última leitura RSSI, em teoria, o valor lido pela antena mais próxima será sempre o mais forte. Como as duas antenas estão próximas, durante a maioria das leituras as duas antenas enxergarão a TAG a sua frente.
  
@@ -314,7 +331,7 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
 
  Supondo que uma pessoa portando uma etiqueta RFID em seu crachá caminhe em frente às leitoras da figura \ref{fig:antenas1}. Definimos a antena da esquerda como a antena $y_1$, e a antena da direita como $y_2$. Ao caminhar da esquerda para a direita, a pessoa passa primeiramente em frente à antena $y_1$, e em seguida passa em frente à antena $y_2$. A cada período de tempo $x$ - onde nesse caso teórico não atribuímos um valor de tempo definido para $x$ a fim de facilitar o entendimento, apenas números inteiros de 1 a 12 - registra-se o valor de potência RSSI para a mesma TAG nas duas antenas nas curvas da figura \ref{fig:rssicurvesmet1}, $y_1$ em azul e $y_2$ em laranja. Os tempos $x$ de 1 a 12 mostram a progressão no tempo.
  
- \begin{figure}[H]
+ \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/image005.png}
     \caption{Exemplo de curvas RSSI com dados gerados artificialmente}
@@ -325,7 +342,7 @@ Simulando a Rede de Petri é possível observar a ideia da circulação das pess
  
  A partir dessa informação, conclui-se que na situação da figura \ref{fig:rssicurvesmet1} a pessoa caminha da direita para a esquerda, em frente às leitoras. Já na figura \ref{fig:rssicurvesmet2}, a pessoa caminha da esquerda para a direita. O intervalo entre o pico das duas curvas é o trecho entre as duas antenas. Define-se o ponto médio entre os dois picos como o ponto de cruzamento.
  
-  \begin{figure}[H]
+  \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/curvas1.png}
     \caption{Exemplo de curvas RSSI com dados gerados artificialmente}
@@ -379,7 +396,7 @@ Usando as transições das curvas normalizadas, procura-se por transições posi
  
 O último caso estudado combina a comparação dos tempos de picos de potência de sinal RSSI e a comparação das transições positivo$\rightarrow$negativo da frequência Doppler para confirmar com mais exatidão a existência de um cruzamento de fronteira. A figura \ref{fig:RSSI_Doppler_norm_MET} combina as figuras \ref{fig:rssicurvesmet1} e \ref{fig:Doppler_norm_MET} em uma.
 
-   \begin{figure}[H]
+   \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\linewidth]{figs/Metodologia/image009.png}
     \caption{Comparativo das curvas RSSI e Doppler Normalizado com dados gerados artificialmente}

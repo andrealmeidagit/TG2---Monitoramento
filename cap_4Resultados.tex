@@ -8,7 +8,7 @@
 
 \section{Teste preliminar} \label{sect:testepreliminar}
 
-Durante testes preliminares, o analisou-se a variação dos valores de RSSI e frequência Doppler com uma única TAG e uma única antena. A princípio as leituras pareciam muito sujeitas a ruído e pequenas alterações, então foram aplicados dois filtros: um filtro passa altas com corte em -60dB para o sinal de RSSI e um filtro rejeita banda para frequência Doppler para ignorar leituras menores que -1,50Hz e maiores que 1,50Hz. O teste preliminar resultou na figura \ref{fig:teste_preliminar}.
+Durante testes preliminares, analisou-se a variação dos valores de RSSI e frequência Doppler com uma única TAG e uma única antena. A princípio as leituras pareciam muito sujeitas a ruído e pequenas alterações, então foram aplicados dois filtros: um filtro passa altas com corte em -60dB para o sinal de RSSI e um filtro rejeita banda para frequência Doppler para ignorar leituras menores que -1,50Hz e maiores que 1,50Hz. O teste preliminar resultou na figura \ref{fig:teste_preliminar}.
  
  \begin{figure}[ht]
     \centering
@@ -25,7 +25,7 @@ Durante testes preliminares, o analisou-se a variação dos valores de RSSI e fr
 
 \section{Teste do programa implementado}
 
-O \textit{software} criado para este trabalho segue a metodologia e as estratégias mencionadas na sessão \ref{section:estrategias}. O programa foi construído de tal forma que, ao mesmo tempo, é possível realizar todos os seis casos de teste. Para isso, a classe \textit{cardholder} possui sete variáveis para armazenar ambientes: uma para o ambiente real - indicado manualmente no terminal do programa quando executado em modo \textit{debug}, para uma pessoa específica apenas - e seis para as suposições de ambiente atual de cada caso de teste.
+O \textit{software} criado para este trabalho segue a metodologia e as estratégias mencionadas na sessão \ref{section:estrategias}. O programa foi desenvolvido de tal forma que, ao mesmo tempo, é possível realizar todos os seis casos de teste. Para isso, a classe \textit{cardholder} possui sete variáveis para armazenar ambientes: uma para o ambiente real - indicado manualmente no terminal do programa quando executado em modo \textit{debug}, para uma pessoa específica apenas - e seis para as suposições de ambiente atual de cada caso de teste.
 
 Três testes foram executados e, durante a execução, o programa armazenou, em tempo real, os dados relevantes de cada leitura de TAG (nome do portador da TAG, número EPC, nome da leitora, número da antena que capturou a leitura, data, horário da captura das informações, ambiente atual, curva de valores de potência RSSI, curva de frequência Doppler e as seis hipóteses de ambiente atual geradas pelos casos de teste). Estes dados podem ser vistos nos apêndices \ref{apendix:1}, \ref{apendix:2} e \ref{apendix:3}.
 
